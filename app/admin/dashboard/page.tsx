@@ -229,7 +229,7 @@ export default function AdminDashboardPage() {
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {metrics.recentActivity.slice(0, 5).map((activity) => (
+              {metrics.recentActivity.slice(0, 5).map((activity: { id: string; action: string; entityType: string; createdAt: string }) => (
                 <div key={activity.id} className="flex items-start gap-3 text-sm">
                   <div className="mt-0.5 p-1.5 rounded-md bg-primary/10">
                     <Activity className="h-3 w-3 text-primary" />
