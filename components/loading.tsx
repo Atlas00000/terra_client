@@ -10,25 +10,8 @@ interface LoadingProps {
 export function Loading({ onComplete }: LoadingProps) {
   const [progress, setProgress] = useState(0)
   const [isComplete, setIsComplete] = useState(false)
-  const [isMobile, setIsMobile] = useState(false)
 
-  // Detect mobile device
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth < 768)
-    }
-    checkMobile()
-    window.addEventListener('resize', checkMobile)
-    return () => window.removeEventListener('resize', checkMobile)
-  }, [])
-
-  // Skip loading screen on mobile
-  useEffect(() => {
-    if (isMobile) {
-      onComplete?.()
-      return
-    }
-
     const timer = setInterval(() => {
       setProgress((prev) => {
         if (prev >= 100) {
@@ -42,15 +25,16 @@ export function Loading({ onComplete }: LoadingProps) {
       })
     }, 100)
 
+    // Fallback timeout - force complete after 3 seconds
+    const fallbackTimer = setTimeout(() => {
+      onComplete?.()
+    }, 3000)
+
     return () => {
       clearInterval(timer)
+      clearTimeout(fallbackTimer)
     }
-  }, [onComplete, isMobile])
-
-  // Don't render loading screen on mobile
-  if (isMobile) {
-    return null
-  }
+  }, [onComplete])
 
   return (
     <div className="fixed inset-0 z-50 bg-background flex items-center justify-center overflow-hidden">
