@@ -6,10 +6,11 @@ import Image from "next/image"
 import Link from "next/link"
 import { Search } from "lucide-react"
 import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
-import { SearchBar } from "@/components/search/search-bar"
+import { SearchModal } from "@/components/search/search-modal"
 
 export function MobileHeader() {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
   const { isMobile, getTouchSettings, getAnimationSettings } = useMobileOptimization()
 
   useEffect(() => {
@@ -18,6 +19,18 @@ export function MobileHeader() {
     }
     window.addEventListener("scroll", handleScroll, { passive: true })
     return () => window.removeEventListener("scroll", handleScroll)
+  }, [])
+
+  // Keyboard shortcut for search (⌘K or Ctrl+K)
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault()
+        setIsSearchOpen(true)
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
   const navItems = [
@@ -105,10 +118,15 @@ export function MobileHeader() {
           ))}
         </nav>
 
-        {/* Search Icon */}
-        <div className="flex-shrink-0">
-          <SearchBar />
-        </div>
+        {/* Search Icon Button */}
+        <motion.button
+          onClick={() => setIsSearchOpen(true)}
+          className="flex-shrink-0 p-2 rounded-md hover:bg-primary/10 text-muted-foreground hover:text-primary transition-colors"
+          whileTap={{ scale: 0.95 }}
+          aria-label="Open search"
+        >
+          <Search className="h-5 w-5" />
+        </motion.button>
       </div>
 
       {/* Scroll indicator */}
@@ -120,6 +138,12 @@ export function MobileHeader() {
           transition={{ duration: 0.3 }}
         />
       )}
+
+      {/* Search Modal */}
+      <SearchModal 
+        open={isSearchOpen} 
+        onOpenChange={setIsSearchOpen} 
+      />
     </motion.header>
   )
 }
