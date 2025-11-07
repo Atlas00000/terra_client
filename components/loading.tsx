@@ -25,7 +25,15 @@ export function Loading({ onComplete }: LoadingProps) {
       })
     }, 100)
 
-    return () => clearInterval(timer)
+    // Fallback timeout for mobile - force complete after 3 seconds
+    const fallbackTimer = setTimeout(() => {
+      onComplete?.()
+    }, 3000)
+
+    return () => {
+      clearInterval(timer)
+      clearTimeout(fallbackTimer)
+    }
   }, [onComplete])
 
   return (
