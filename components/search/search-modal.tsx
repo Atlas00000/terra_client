@@ -14,6 +14,7 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogDescription,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { useSearch } from '@/hooks/use-search';
@@ -97,6 +98,10 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
       <DialogContent className="max-w-3xl p-0 gap-0 max-h-[80vh] overflow-hidden">
         {/* Search Input Header */}
         <DialogHeader className="px-4 py-4 border-b">
+          <DialogTitle className="sr-only">Search</DialogTitle>
+          <DialogDescription className="sr-only">
+            Search across products, news, and content
+          </DialogDescription>
           <div className="flex items-center gap-3">
             <Search className="h-5 w-5 text-muted-foreground flex-shrink-0" />
             
