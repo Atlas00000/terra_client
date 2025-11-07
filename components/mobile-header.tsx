@@ -4,7 +4,9 @@ import { motion, AnimatePresence } from "framer-motion"
 import { useState, useEffect } from "react"
 import Image from "next/image"
 import Link from "next/link"
+import { Search } from "lucide-react"
 import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
+import { SearchBar } from "@/components/search/search-bar"
 
 export function MobileHeader() {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -102,6 +104,11 @@ export function MobileHeader() {
             </motion.a>
           ))}
         </nav>
+
+        {/* Search Icon */}
+        <div className="flex-shrink-0">
+          <SearchBar />
+        </div>
       </div>
 
       {/* Scroll indicator */}
