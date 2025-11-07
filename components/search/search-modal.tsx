@@ -31,7 +31,18 @@ interface SearchModalProps {
 export function SearchModal({ open, onOpenChange }: SearchModalProps) {
   const [query, setQuery] = useState('');
   const [debouncedQuery, setDebouncedQuery] = useState('');
+  const [isMobile, setIsMobile] = useState(false);
   const router = useRouter();
+
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Debounce search query to avoid too many API calls
   useEffect(() => {
@@ -106,7 +117,7 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
             <Search className="h-5 w-5 text-muted-foreground flex-shrink-0" />
             
             <Input
-              autoFocus
+              autoFocus={!isMobile}
               type="text"
               placeholder="Search products, news, and more..."
               value={query}
