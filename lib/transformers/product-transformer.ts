@@ -16,6 +16,7 @@ export function transformProductSpec(
     id: apiProduct.id,
     productName: apiProduct.productName,
     category: apiProduct.category,
+    createdById: (apiProduct as any).createdById || 'system',
     specifications: apiProduct.specifications,
     performanceMetrics: apiProduct.performanceMetrics,
     technicalDetails: apiProduct.technicalDetails,

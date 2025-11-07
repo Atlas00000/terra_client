@@ -16,6 +16,7 @@ export const FALLBACK_PRODUCTS: ProductSpecification[] = [
     id: 'fallback-artemis',
     productName: 'Artemis',
     category: 'UAV',
+    createdById: 'system',
     specifications: {
       platform: 'Fixed-Wing UAV',
       primaryRole: 'ISR (Intelligence, Surveillance, Reconnaissance)',
@@ -53,6 +54,7 @@ export const FALLBACK_PRODUCTS: ProductSpecification[] = [
     id: 'fallback-archer',
     productName: 'Archer',
     category: 'VTOL',
+    createdById: 'system',
     specifications: {
       platform: 'Vertical Take-Off and Landing Aircraft',
       primaryRole: 'Tactical Transport & Logistics',
@@ -90,6 +92,7 @@ export const FALLBACK_PRODUCTS: ProductSpecification[] = [
     id: 'fallback-iroko',
     productName: 'Iroko',
     category: 'Armored Vehicle',
+    createdById: 'system',
     specifications: {
       platform: '4x4 Tactical Armored Vehicle',
       primaryRole: 'Personnel Transport & Security',
@@ -127,6 +130,7 @@ export const FALLBACK_PRODUCTS: ProductSpecification[] = [
     id: 'fallback-duma',
     productName: 'Duma',
     category: 'Armored Vehicle',
+    createdById: 'system',
     specifications: {
       platform: '6x6 Mine-Resistant Vehicle',
       primaryRole: 'Force Protection & IED Defense',
@@ -164,6 +168,7 @@ export const FALLBACK_PRODUCTS: ProductSpecification[] = [
     id: 'fallback-kallon',
     productName: 'Kallon',
     category: 'Armored Vehicle',
+    createdById: 'system',
     specifications: {
       platform: '4x4 Light Armored Patrol Vehicle',
       primaryRole: 'Reconnaissance & Border Patrol',

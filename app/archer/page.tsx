@@ -89,21 +89,21 @@ export default function ArcherPage() {
         )}
 
         {/* Archer Hero Section - Always visible */}
-        <ArcherHeroSection product={product} />
+        <ArcherHeroSection />
 
         {/* Mobile: Combined Flight Capabilities & Technical Specifications Slideshow */}
         {isMobile ? (
-          <MobileArcherSlideshow product={product} />
+          <MobileArcherSlideshow />
         ) : (
           <>
             {/* Desktop: Individual Sections */}
-            <ArcherCapabilitiesSection product={product} />
-            <ArcherSpecificationsSection product={product} />
+            <ArcherCapabilitiesSection />
+            <ArcherSpecificationsSection />
           </>
         )}
 
         {/* Mission Applications Section */}
-        <ArcherApplicationsSection product={product} />
+        <ArcherApplicationsSection />
 
         <Footer />
       </main>

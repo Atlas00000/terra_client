@@ -2,7 +2,7 @@
  * API Type Definitions for Terra Industries Backend
  * 
  * These types match the backend DTOs and database models.
- * Keep in sync with server/src/modules/*/dto/*.dto.ts
+ * Keep in sync with server/src/modules DTOs
  */
 
 // ==================== COMMON TYPES ====================

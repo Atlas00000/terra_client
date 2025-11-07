@@ -139,11 +139,10 @@ export function useAuth(): UseAuthReturn {
   });
 
   const handleLogin = useCallback(
-    async (credentials: LoginCredentials) => {
+    async (credentials: LoginCredentials): Promise<void> => {
       const result = await loginMutation.mutateAsync(credentials);
       // Force update the local user state immediately
       setUser(result.user);
-      return result;
     },
     [loginMutation]
   );

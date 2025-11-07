@@ -124,7 +124,7 @@ apiClient.interceptors.response.use(
     return Promise.reject({
       type: 'HTTP_ERROR',
       status,
-      message: error.response.data?.message || error.message,
+      message: (error.response.data as any)?.message || error.message,
       data: error.response.data,
       originalError: error,
     });

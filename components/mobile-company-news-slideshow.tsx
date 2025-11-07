@@ -248,8 +248,9 @@ export function MobileCompanyNewsSlideshow() {
           img.onerror = () => {
             // Handle error silently, don't add to loaded set
           }
-            setImagesLoaded(prev => new Set([...prev, index]))
-          img.src = slides[index].visual
+          if (slides[index].visual) {
+            img.src = slides[index].visual
+          }
         }
       })
     }
@@ -424,7 +425,7 @@ export function MobileCompanyNewsSlideshow() {
 
                 {/* Items List */}
                 <div className="space-y-4">
-                  {slides[currentSlide].items.map((item, index) => (
+                  {slides[currentSlide]?.items?.map((item, index) => (
                     <motion.div
                       key={index}
                       className="p-4 rounded-xl bg-gradient-to-br from-primary/5 to-green-400/5 border border-primary/10"
@@ -467,8 +468,8 @@ export function MobileCompanyNewsSlideshow() {
                   )}
                   
                   <Image
-                    src={slides[currentSlide].visual}
-                    alt={slides[currentSlide].title}
+                    src={slides[currentSlide]?.visual || '/placeholder.svg'}
+                    alt={slides[currentSlide]?.title || 'Terra Industries'}
                     fill
                     className={`object-contain transition-opacity duration-300 ${
                       imagesLoaded.has(currentSlide) ? 'opacity-100' : 'opacity-0'

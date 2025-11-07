@@ -10,6 +10,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { InquiryDTO } from '@/types/api';
+import { Inbox } from 'lucide-react';
 import {
   Table,
   TableBody,

@@ -89,17 +89,17 @@ export default function ArtemisPage() {
         )}
 
         {/* Artemis Hero Section - Always visible */}
-        <ArtemisHeroSection product={product} />
+        <ArtemisHeroSection />
 
         {/* Mobile: Combined AI Intelligence & System Integration Slideshow */}
         {isMobile ? (
-          <MobileArtemisSlideshow product={product} />
+          <MobileArtemisSlideshow />
         ) : (
           <>
             {/* Desktop: Individual Sections */}
-            <ArtemisIntelligenceSection product={product} />
-            <ArtemisCapabilitiesSection product={product} />
-            <ArtemisIntegrationSection product={product} />
+            <ArtemisIntelligenceSection />
+            <ArtemisCapabilitiesSection />
+            <ArtemisIntegrationSection />
           </>
         )}
 
