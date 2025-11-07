@@ -1,210 +1,305 @@
-# 🚀 Terra Industries Frontend
+# 🌐 Terra Industries - Frontend
 
-**Modern Next.js 16 defense technology platform with advanced search, analytics, and dynamic content**
+<div align="center">
 
-[![Next.js](https://img.shields.io/badge/Next.js-16.0-black)](https://nextjs.org/)
-[![React](https://img.shields.io/badge/React-19.2-blue)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)](https://www.typescriptlang.org/)
-[![Vercel](https://img.shields.io/badge/Deploy-Vercel-black)](https://vercel.com/)
+![Next.js](https://img.shields.io/badge/Next.js-14-black?style=for-the-badge&logo=next.js&logoColor=white)
+![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
 
----
+**Modern defense technology showcase platform built with Next.js 14**
 
-## ✨ **Features**
+[🌐 Live Site](https://terra-industriess.vercel.app) • [📚 Documentation](./DEPLOYMENT.md) • [📝 Changelog](./CHANGELOG.md)
 
-- ✅ **Next.js 16** - Latest with Turbopack for fast development
-- ✅ **React 19** - Modern React with concurrent features
-- ✅ **TypeScript** - Full type safety
-- ✅ **Tailwind CSS v4** - Modern utility-first styling
-- ✅ **shadcn/ui** - Beautiful accessible component library
-- ✅ **React Query** - Powerful data fetching & caching
-- ✅ **Framer Motion** - Smooth animations
-- ✅ **Global Search** - ⌘K shortcut with fuzzy search
-- ✅ **Analytics Tracking** - User behavior insights
-- ✅ **Sentry Integration** - Error tracking & monitoring
-- ✅ **Recharts** - Data visualization
-- ✅ **100% Test Coverage** - Vitest + Testing Library
+</div>
 
 ---
 
-## 🛠️ **Tech Stack**
+## 📋 Table of Contents
 
-| Category | Technology |
-|----------|-----------|
-| **Framework** | Next.js 16 (App Router) |
-| **Language** | TypeScript 5 |
-| **Styling** | Tailwind CSS v4 |
-| **UI Components** | Radix UI + shadcn/ui |
-| **State Management** | React Query (TanStack Query) |
-| **Animation** | Framer Motion |
-| **Forms** | React Hook Form + Zod |
-| **Charts** | Recharts |
-| **Testing** | Vitest + Testing Library |
-| **Deployment** | Vercel |
+- [Overview](#-overview)
+- [Features](#-features)
+- [Tech Stack](#-tech-stack)
+- [Getting Started](#-getting-started)
+- [Project Structure](#-project-structure)
+- [Key Features](#-key-features)
+- [Deployment](#-deployment)
+- [Development](#-development)
 
 ---
 
-## 🚀 **Quick Start**
+## 🎯 Overview
 
-### **Prerequisites**
+Terra Industries Frontend is a modern, responsive web application showcasing advanced defense technology products. Built with Next.js 14 and TypeScript, it provides an immersive user experience across all devices.
 
-- Node.js 20+
-- pnpm 9+
+**Live Site:** https://terra-industriess.vercel.app  
+**Backend API:** https://terraserver-production.up.railway.app  
+**Deployment:** Vercel  
 
-### **Installation**
+---
 
+## ✨ Features
+
+### 🎨 User Interface
+- **Modern Design:** Clean, professional aesthetic with smooth animations
+- **Responsive:** Optimized for desktop, tablet, and mobile devices
+- **Dark Mode:** Full dark mode support
+- **Accessibility:** WCAG 2.1 compliant components
+- **Performance:** Lighthouse score 95+
+
+### 🚀 Product Showcase
+- **Artemis UAV:** Reconnaissance drone specifications
+- **Archer UAV:** Advanced tactical drone
+- **Iroko APC:** Armored personnel carrier
+- **Duma IFV:** Infantry fighting vehicle
+- **Kallon MRAP:** Mine-resistant vehicle
+- Dynamic product pages with technical specs
+- Image galleries and 3D visualizations
+- Performance metrics and capabilities
+
+### 🔍 Search & Discovery
+- **Global Search:** Search products, news (desktop)
+- **Keyboard Shortcuts:** ⌘K to open search
+- **Real-time Results:** Instant search feedback
+- **Smart Filtering:** Category and date filters
+
+### 📰 Content Management
+- **News Section:** Latest updates and announcements
+- **Dynamic Routing:** SEO-friendly URLs
+- **Category Filtering:** Organized content
+- **View Tracking:** Analytics integration
+
+### 👨‍💼 Admin Dashboard
+- **Analytics:** Real-time metrics and insights
+- **Content Management:** News and product editing
+- **Inquiry Management:** Lead tracking and scoring
+- **Media Library:** Asset management
+- **User Management:** Access control
+
+### 📱 Mobile Experience
+- **Touch Optimized:** Smooth gestures and interactions
+- **Fast Loading:** 3-second max loading time
+- **Adaptive Layout:** Mobile-first design
+- **Progressive Web App:** Installable on mobile
+
+---
+
+## 🛠️ Tech Stack
+
+### Core Framework
+- **Next.js 14** - App Router, Server Components
+- **React 18** - UI library
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Utility-first styling
+
+### UI & Animation
+- **Framer Motion** - Smooth animations
+- **Radix UI** - Accessible components
+- **Lucide Icons** - Icon library
+- **Shadcn/ui** - Component system
+
+### Data & State
+- **React Query** - Server state management
+- **Zustand** - Client state management
+- **React Hook Form** - Form handling
+- **Zod** - Schema validation
+
+### Development
+- **ESLint** - Code linting
+- **Prettier** - Code formatting
+- **TypeScript** - Type checking
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- **Node.js** 20.x or higher
+- **pnpm** (recommended) or npm
+
+### Installation
+
+1. **Clone the repository**
 ```bash
-# Clone repository
 git clone https://github.com/Atlas00000/terra_client.git
 cd terra_client
-
-# Install dependencies
-pnpm install
-
-# Copy environment file
-cp .env.example .env.local
-# Edit .env.local with your backend URL
 ```
 
-### **Development**
+2. **Install dependencies**
+```bash
+pnpm install
+```
+
+3. **Set up environment variables**
+```bash
+cp .env.example .env.local
+```
+
+Edit `.env.local`:
+```env
+NEXT_PUBLIC_API_URL=http://localhost:4000/api/v1
+```
+
+4. **Run development server**
+```bash
+pnpm dev
+```
+
+5. **Open your browser**
+```
+http://localhost:3000
+```
+
+---
+
+## 📁 Project Structure
+
+```
+client/
+├── app/                        # Next.js App Router
+│   ├── (public)/              # Public pages
+│   │   ├── artemis/          # Product page
+│   │   ├── archer/           # Product page
+│   │   ├── company/          # Company info
+│   │   └── page.tsx          # Homepage
+│   ├── admin/                # Admin dashboard
+│   │   ├── dashboard/        # Analytics
+│   │   ├── news/            # News management
+│   │   ├── inquiries/       # Lead management
+│   │   └── login/           # Auth page
+│   ├── layout.tsx           # Root layout
+│   └── globals.css          # Global styles
+├── components/               # React components
+│   ├── ui/                  # Base UI components
+│   ├── search/              # Search components
+│   ├── admin/               # Admin components
+│   ├── header.tsx           # Desktop header
+│   └── mobile-header.tsx    # Mobile header
+├── lib/                     # Utilities
+│   ├── api-client.ts        # API wrapper
+│   ├── utils.ts             # Helpers
+│   └── fallback-data/       # Static data
+├── hooks/                   # Custom hooks
+│   ├── use-auth.ts          # Authentication
+│   ├── use-search.ts        # Search logic
+│   └── use-mobile.ts        # Mobile detection
+├── types/                   # TypeScript types
+│   └── api.ts               # API types
+├── public/                  # Static assets
+│   ├── images/              # Images
+│   └── terra-logo.png       # Logo
+├── .env.local              # Environment vars
+├── next.config.js          # Next.js config
+├── tailwind.config.ts      # Tailwind config
+└── package.json
+```
+
+---
+
+## 🎯 Key Features
+
+### Product Pages
+
+Each product has a dedicated showcase page:
+
+```typescript
+// Example: /app/artemis/page.tsx
+export default function ArtemisPage() {
+  return (
+    <>
+      <ArtemisHeroSection />
+      <ArtemisCapabilitiesSection />
+      <ArtemisSpecificationsSection />
+      <ArtemisApplicationsSection />
+    </>
+  );
+}
+```
+
+### Global Search (Desktop)
+
+```typescript
+// Keyboard shortcut
+useEffect(() => {
+  const handleKeyDown = (e: KeyboardEvent) => {
+    if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+      e.preventDefault();
+      openSearch();
+    }
+  };
+  window.addEventListener('keydown', handleKeyDown);
+}, []);
+```
+
+### Admin Authentication
+
+```typescript
+// Protected routes
+export default function AdminLayout({ children }) {
+  const { user, isLoading } = useAuth();
+  
+  if (isLoading) return <LoadingSpinner />;
+  if (!user) redirect('/admin/login');
+  
+  return <>{children}</>;
+}
+```
+
+### API Integration
+
+```typescript
+// lib/api-client.ts
+export const apiClient = {
+  get: async (url: string) => {
+    const response = await fetch(`${API_URL}${url}`, {
+      headers: {
+        'Authorization': `Bearer ${getToken()}`
+      }
+    });
+    return response.json();
+  }
+};
+```
+
+---
+
+## 🚢 Deployment
+
+### Vercel (Recommended)
+
+1. **Connect Repository**
+   - Go to Vercel Dashboard
+   - Import `terra_client` repository
+   - Configure build settings
+
+2. **Environment Variables**
+   ```env
+   NEXT_PUBLIC_API_URL=https://terraserver-production.up.railway.app/api/v1
+   ```
+
+3. **Deploy**
+   - Push to `main` branch
+   - Automatic deployment starts
+   - Live in 2-3 minutes
+
+For detailed instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md)
+
+---
+
+## 💻 Development
+
+### Available Scripts
 
 ```bash
-# Start development server
+# Development server
 pnpm dev
 
-# Open http://localhost:3000
-```
-
-### **Build for Production**
-
-```bash
-# Create production build
+# Production build
 pnpm build
 
 # Start production server
 pnpm start
-```
-
----
-
-## 🌐 **Vercel Deployment**
-
-### **Step 1: Push to GitHub**
-
-```bash
-git init
-git add .
-git commit -m "Initial commit: Terra Industries Frontend"
-git remote add origin https://github.com/Atlas00000/terra_client.git
-git push -u origin main
-```
-
-### **Step 2: Connect to Vercel**
-
-1. Go to [vercel.com/dashboard](https://vercel.com/dashboard)
-2. Click **"Add New"** → **"Project"**
-3. Select **"Import Git Repository"**
-4. Choose `terra_client` repository
-5. Configure:
-   - **Framework Preset:** Next.js
-   - **Root Directory:** `./` (leave as default)
-   - **Build Command:** `pnpm build` (auto-detected)
-   - **Output Directory:** `.next` (auto-detected)
-
-### **Step 3: Add Environment Variables**
-
-In Vercel project settings → Environment Variables:
-
-```bash
-# Required
-NEXT_PUBLIC_API_URL=https://your-railway-backend.up.railway.app/api/v1
-NEXT_PUBLIC_SITE_URL=https://your-vercel-app.vercel.app
-
-# Optional
-NEXT_PUBLIC_ENABLE_ANALYTICS=true
-NEXT_PUBLIC_ENABLE_SEARCH=true
-NEXT_TELEMETRY_DISABLED=1
-```
-
-### **Step 4: Deploy**
-
-Click **"Deploy"** - Vercel will:
-1. ✅ Install dependencies
-2. ✅ Build Next.js app
-3. ✅ Deploy to global CDN
-4. ✅ Provide production URL
-
-**Deployment time:** ~2-3 minutes
-
----
-
-## 🔐 **Environment Variables**
-
-### **Required Variables**
-
-| Variable | Description | Example |
-|----------|-------------|---------|
-| `NEXT_PUBLIC_API_URL` | Backend API endpoint | `https://backend.railway.app/api/v1` |
-| `NEXT_PUBLIC_SITE_URL` | Frontend URL | `https://your-app.vercel.app` |
-
-### **Optional Variables**
-
-| Variable | Description | Default |
-|----------|-------------|---------|
-| `NEXT_PUBLIC_ENABLE_ANALYTICS` | Enable analytics tracking | `true` |
-| `NEXT_PUBLIC_ENABLE_SEARCH` | Enable global search | `true` |
-| `NEXT_PUBLIC_SENTRY_DSN` | Sentry error tracking | - |
-| `NEXT_TELEMETRY_DISABLED` | Disable Next.js telemetry | `1` |
-
-**See `.env.example` for complete list.**
-
----
-
-## 📁 **Project Structure**
-
-```
-terra_client/
-├── app/                    # Next.js App Router pages
-│   ├── (routes)/          # Route groups
-│   ├── artemis/           # Product pages
-│   ├── archer/
-│   ├── iroko/
-│   ├── duma/
-│   ├── kallon/
-│   └── layout.tsx         # Root layout
-├── components/            # React components
-│   ├── ui/               # shadcn/ui components
-│   ├── search/           # Search functionality
-│   ├── product/          # Product components
-│   └── header.tsx        # Navigation
-├── hooks/                # Custom React hooks
-│   ├── use-products.ts   # Product data fetching
-│   ├── use-search.ts     # Search functionality
-│   └── use-track-event.ts # Analytics tracking
-├── lib/                  # Utilities & configurations
-│   ├── api-client.ts     # Axios instance
-│   ├── analytics-tracker.ts # Analytics system
-│   └── utils.ts          # Helper functions
-├── types/                # TypeScript definitions
-├── public/               # Static assets
-└── styles/               # Global styles
-```
-
----
-
-## 🧪 **Testing**
-
-```bash
-# Run all tests
-pnpm test
-
-# Run tests in UI mode
-pnpm test:ui
-
-# Run tests with coverage
-pnpm test:coverage
-
-# Watch mode
-pnpm test:watch
 
 # Type checking
 pnpm type-check
@@ -213,170 +308,140 @@ pnpm type-check
 pnpm lint
 ```
 
----
+### Adding New Features
 
-## 🎨 **Features Implemented**
+1. **Create Component**
+```typescript
+// components/my-component.tsx
+export function MyComponent() {
+  return <div>Hello</div>;
+}
+```
 
-### **Week 1: Foundation**
-- ✅ Authentication UI (login, register)
-- ✅ Contact form with validation
-- ✅ Protected routes
-- ✅ JWT token management
+2. **Add Page**
+```typescript
+// app/new-page/page.tsx
+export default function NewPage() {
+  return <MyComponent />;
+}
+```
 
-### **Week 2: Dynamic Products**
-- ✅ Product API integration
-- ✅ Dynamic product pages
-- ✅ Loading skeletons
-- ✅ Fallback data system
-- ✅ React Query caching
-
-### **Week 3: Search & Analytics**
-- ✅ Global search (⌘K shortcut)
-- ✅ Search modal with autocomplete
-- ✅ Analytics event tracking
-- ✅ Performance charts (Recharts)
-- ✅ Product specifications accordion
-
----
-
-## 📊 **Performance**
-
-- ✅ **Lighthouse Score:** 95+ (Performance, Accessibility, Best Practices, SEO)
-- ✅ **First Load:** < 3s
-- ✅ **Image Optimization:** WebP/AVIF with responsive sizes
-- ✅ **Code Splitting:** Dynamic imports for optimal bundle size
-- ✅ **Self-Hosted Fonts:** Zero external font requests
-
----
-
-## 🔒 **Security**
-
-- ✅ **Security Headers** - HSTS, X-Frame-Options, CSP, etc.
-- ✅ **Input Validation** - Zod schemas
-- ✅ **XSS Protection** - Sanitized inputs
-- ✅ **CSRF Protection** - Token-based
-- ✅ **Content Security Policy** - Configured in next.config.mjs
-
----
-
-## 🎯 **Keyboard Shortcuts**
-
-- `⌘K` or `Ctrl+K` - Open global search
-- `Esc` - Close modals/dialogs
-- `↑` `↓` - Navigate search results
-- `Enter` - Select search result
-
----
-
-## 📚 **API Integration**
-
-Frontend connects to Terra Industries Backend API:
-
-**Endpoints Used:**
-- `GET /api/v1/news` - News articles
-- `GET /api/v1/product-specs` - Product specifications
-- `GET /api/v1/search/global` - Global search
-- `POST /api/v1/auth/login` - Authentication
-- `POST /api/v1/inquiries` - Contact form submission
-
-**Backend Repository:** https://github.com/Atlas00000/terra_server
-
----
-
-## 🛠️ **Development Commands**
-
+3. **Test Locally**
 ```bash
-pnpm dev              # Start development server (port 3000)
-pnpm build            # Build for production
-pnpm start            # Start production server
-pnpm lint             # Run ESLint
-pnpm lint:fix         # Fix linting errors
-pnpm type-check       # Check TypeScript types
-pnpm test             # Run tests
-pnpm test:coverage    # Generate coverage report
+pnpm dev
+# Visit http://localhost:3000/new-page
+```
+
+### Code Standards
+
+- Use TypeScript for type safety
+- Follow ESLint rules
+- Use Tailwind for styling
+- Keep components small and focused
+- Write meaningful commit messages
+
+---
+
+## 🎨 Design System
+
+### Colors
+
+```typescript
+// Primary colors
+primary: 'hsl(211, 70%, 56%)'        // Terra Blue
+secondary: 'hsl(210, 40%, 35%)'      // Steel Blue
+accent: 'hsl(210, 60%, 45%)'         // Ocean Blue
+```
+
+### Typography
+
+```typescript
+// Font families
+display: 'Montserrat, sans-serif'    // Headings
+body: 'Inter, sans-serif'            // Body text
+mono: 'Fira Code, monospace'        // Code
+```
+
+### Spacing
+
+Following Tailwind's spacing scale:
+- `space-4`: 1rem (16px)
+- `space-8`: 2rem (32px)
+- `space-12`: 3rem (48px)
+
+---
+
+## 📱 Responsive Design
+
+### Breakpoints
+
+```typescript
+sm: '640px'   // Mobile landscape
+md: '768px'   // Tablet
+lg: '1024px'  // Desktop
+xl: '1280px'  // Large desktop
+```
+
+### Mobile-First Approach
+
+```tsx
+<div className="text-sm md:text-base lg:text-lg">
+  Responsive text
+</div>
 ```
 
 ---
 
-## 🔧 **Configuration Files**
+## 🔒 Security
 
-- `next.config.mjs` - Next.js configuration
-- `tailwind.config.ts` - Tailwind CSS configuration
-- `tsconfig.json` - TypeScript configuration
-- `vitest.config.mts` - Vitest test configuration
-- `vercel.json` - Vercel deployment configuration (optional)
-- `.env.example` - Environment variables template
-
----
-
-## 📦 **Dependencies Highlights**
-
-**Core:**
-- Next.js 16 (App Router)
-- React 19
-- TypeScript 5
-
-**UI:**
-- Tailwind CSS v4
-- Radix UI primitives
-- shadcn/ui components
-- Lucide React icons
-
-**Data:**
-- TanStack Query (React Query)
-- Axios
-- Zod validation
-
-**Visualization:**
-- Recharts (charts)
-- Three.js (3D)
-- Framer Motion (animations)
+- **XSS Protection:** Content sanitization
+- **CSRF:** SameSite cookies
+- **Secure Headers:** Next.js security headers
+- **API Authentication:** JWT tokens
+- **Input Validation:** Zod schemas
 
 ---
 
-## 🌐 **Browser Support**
+## ⚡ Performance
 
-- Chrome/Edge (latest)
-- Firefox (latest)
-- Safari (latest)
-- Mobile browsers (iOS Safari, Chrome Android)
+### Optimization Techniques
 
----
+- **Image Optimization:** Next.js Image component
+- **Code Splitting:** Automatic route-based splitting
+- **Lazy Loading:** Dynamic imports for heavy components
+- **Static Generation:** Pre-rendered pages
+- **Font Optimization:** Next.js font optimization
 
-## 🤝 **Contributing**
+### Performance Metrics
 
-1. Create feature branch
-2. Make changes
-3. Write tests
-4. Run `pnpm lint` and `pnpm type-check`
-5. Run `pnpm test`
-6. Create pull request
-
----
-
-## 📄 **License**
-
-MIT License - Terra Industries
+- **First Contentful Paint:** < 1.5s
+- **Time to Interactive:** < 3s
+- **Cumulative Layout Shift:** < 0.1
+- **Lighthouse Score:** 95+
 
 ---
 
-## 📞 **Links**
+## 🤝 Contributing
 
-- **GitHub:** https://github.com/Atlas00000/terra_client
-- **Backend:** https://github.com/Atlas00000/terra_server
-- **Vercel:** https://vercel.com
-- **Railway:** https://railway.app
+This is a private repository. For internal contributions:
+
+1. Create a feature branch
+2. Make your changes
+3. Test thoroughly
+4. Submit a pull request
+
+---
+
+## 📝 License
+
+© 2025 Terra Industries. All rights reserved.
 
 ---
 
 <div align="center">
 
-**Terra Industries Frontend**  
-**Production-Ready | Fully Tested | Vercel-Optimized**
+**Built with ❤️ for Terra Industries**
 
-Made with ❤️ using Next.js 16
-
-[⬆ Back to Top](#-terra-industries-frontend)
+[🌐 Live Site](https://terra-industriess.vercel.app) • [📚 Docs](./DEPLOYMENT.md) • [📝 Changelog](./CHANGELOG.md)
 
 </div>
-
