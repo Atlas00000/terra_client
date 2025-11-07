@@ -249,7 +249,7 @@ export function MobileCompanyNewsSlideshow() {
             // Handle error silently, don't add to loaded set
           }
           if (slides[index].visual) {
-            img.src = slides[index].visual
+          img.src = slides[index].visual
           }
         }
       })
