@@ -118,11 +118,15 @@ export function SearchModal({ open, onOpenChange }: SearchModalProps) {
             
             <Input
               autoFocus={!isMobile}
-              type="text"
+              type="search"
               placeholder="Search products, news, and more..."
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               className="flex-1 border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-lg px-0"
+              autoComplete="off"
+              data-form-type="other"
+              data-1p-ignore="true"
+              data-lpignore="true"
             />
             
             {query && (
