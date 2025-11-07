@@ -9,7 +9,7 @@
 
 **Modern defense technology showcase platform built with Next.js 14**
 
-[🌐 Live Site](https://terra-industriess.vercel.app) • [📚 Documentation](./DEPLOYMENT.md) • [📝 Changelog](./CHANGELOG.md)
+[🌐 Live Site](https://terra-industriess.vercel.app) • [📚 Documentation](docs/DEPLOYMENT.md) • [📝 Changelog](docs/CHANGELOG.md) • [🚀 Vercel Guide](docs/VERCEL-DEPLOYMENT.md)
 
 </div>
 
@@ -283,7 +283,7 @@ export const apiClient = {
    - Automatic deployment starts
    - Live in 2-3 minutes
 
-For detailed instructions, see [DEPLOYMENT.md](./DEPLOYMENT.md)
+For detailed instructions, see [DEPLOYMENT.md](docs/DEPLOYMENT.md)
 
 ---
 
@@ -442,6 +442,6 @@ This is a private repository. For internal contributions:
 
 **Built with ❤️ for Terra Industries**
 
-[🌐 Live Site](https://terra-industriess.vercel.app) • [📚 Docs](./DEPLOYMENT.md) • [📝 Changelog](./CHANGELOG.md)
+[🌐 Live Site](https://terra-industriess.vercel.app) • [📚 Docs](docs/DEPLOYMENT.md) • [📝 Changelog](docs/CHANGELOG.md)
 
 </div>
