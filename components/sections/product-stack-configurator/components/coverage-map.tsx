@@ -1,5 +1,6 @@
 "use client"
 
+import { memo, useEffect, useMemo, useState } from "react"
 import { motion } from "framer-motion"
 import { ProductRecommendation, FacilityType, CoverageArea } from "../utils/types"
 import { PRODUCT_SPECS } from "../utils/product-specs"
@@ -19,7 +20,9 @@ interface CoverageMapProps {
   isReducedMotion: boolean
 }
 
-export function CoverageMap({ recommendation, facilityType, coverageArea, animationSettings, isReducedMotion }: CoverageMapProps) {
+export const CoverageMap = memo(CoverageMapComponent)
+
+function CoverageMapComponent({ recommendation, facilityType, coverageArea, animationSettings, isReducedMotion }: CoverageMapProps) {
   // Real Kallon specs: 3km detection, 15km coverage radius
   const KALLON_DETECTION = 3
   const KALLON_COVERAGE = 15
@@ -63,28 +66,34 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
   // Visual radius in SVG coordinates
   const maxRadius = visualizationRadius * scaleFactor
   
-  // Create visualization config
-  const visualizationConfig: VisualizationConfig = {
+  const visualizationConfig: VisualizationConfig = useMemo(() => ({
     svgSize,
     centerX,
     centerY,
     maxRadius,
     scaleFactor,
     coverageArea
-  }
+  }), [svgSize, centerX, centerY, maxRadius, scaleFactor, coverageArea])
 
-  // Distribute all units using new modular system
-  const allUnits = distributeUnits(recommendation, visualizationConfig)
-  
-  // Separate Kallon towers from other units
-  const kallonUnits = allUnits.filter(u => u.productKey === 'Kallon')
-  const otherUnits = allUnits.filter(u => u.productKey !== 'Kallon')
-  
-  // Cluster units of the same type (for better visualization)
-  const clusters = clusterUnits(otherUnits)
-  
-  // Calculate coverage zones
-  const coverageZones = calculateCoverageZones(allUnits, visualizationConfig)
+  const allUnits = useMemo(
+    () => distributeUnits(recommendation, visualizationConfig),
+    [recommendation, visualizationConfig]
+  )
+
+  const kallonUnits = useMemo(
+    () => allUnits.filter(u => u.productKey === "Kallon"),
+    [allUnits]
+  )
+  const otherUnits = useMemo(
+    () => allUnits.filter(u => u.productKey !== "Kallon"),
+    [allUnits]
+  )
+
+  const clusters = useMemo(() => clusterUnits(otherUnits), [otherUnits])
+  const coverageZones = useMemo(
+    () => calculateCoverageZones(allUnits, visualizationConfig),
+    [allUnits, visualizationConfig]
+  )
   
   // Kallon specs scaled appropriately based on coverage area
   const kallonScaleFactor = (() => {
@@ -100,6 +109,19 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
   const kallonDetectionRadius = KALLON_DETECTION * kallonScaleFactor
   const kallonCoverageRadius = KALLON_COVERAGE * kallonScaleFactor
 
+  const [allowAnimation, setAllowAnimation] = useState(!isReducedMotion)
+  useEffect(() => {
+    if (isReducedMotion) {
+      setAllowAnimation(false)
+      return
+    }
+    setAllowAnimation(true)
+    const timer = setTimeout(() => setAllowAnimation(false), 6000)
+    return () => clearTimeout(timer)
+  }, [isReducedMotion])
+
+  const shouldAnimate = allowAnimation && !isReducedMotion
+
   return (
     <motion.div
       className="w-full relative"
@@ -107,35 +129,15 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
       animate={{ opacity: 1, scale: 1 }}
       transition={animationSettings}
     >
-      {/* Floating gradient orbs - background depth */}
-      {!isReducedMotion && [0, 1, 2].map((i) => {
-        const hash = (i * 7919) % 1000000
-        return (
-          <motion.div
-            key={`orb-${i}`}
-            className="absolute rounded-full blur-3xl opacity-20 -z-10"
-            style={{
-              width: `${200 + i * 100}px`,
-              height: `${200 + i * 100}px`,
-              left: `${(hash % 60) + 20}%`,
-              top: `${((hash * 7) % 60) + 20}%`,
-              background: `radial-gradient(circle, rgba(74, 144, 226, 0.4), transparent)`
-            }}
-            animate={{
-              scale: [1, 1.3, 1],
-              opacity: [0.15, 0.3, 0.15],
-              x: [0, 40, 0],
-              y: [0, 30, 0]
-            }}
-            transition={{
-              duration: 10 + i * 3,
-              repeat: Infinity,
-              delay: i * 2,
-              ease: 'easeInOut'
-            }}
-          />
-        )
-      })}
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `
+            radial-gradient(circle at 25% 25%, rgba(74,144,226,0.18), transparent 55%),
+            radial-gradient(circle at 70% 15%, rgba(99,102,241,0.15), transparent 50%)
+          `
+        }}
+      />
 
       {/* Main fluid container */}
       <div className="relative max-w-5xl mx-auto">
@@ -157,10 +159,10 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
           >
             <motion.h4
               className="text-3xl md:text-4xl font-black text-foreground mb-3"
-              animate={!isReducedMotion ? {
+              animate={shouldAnimate ? {
                 scale: [1, 1.02, 1]
               } : {}}
-              transition={{ duration: 3, repeat: Infinity }}
+              transition={shouldAnimate ? { duration: 3, repeat: Infinity } : undefined}
             >
               Coverage Visualization
             </motion.h4>
@@ -216,11 +218,11 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                 r={maxRadius}
                 fill="url(#coverageGradient)"
                 initial={{ opacity: 0, scale: 0 }}
-                animate={!isReducedMotion ? {
+                animate={shouldAnimate ? {
                   opacity: [0.3, 0.5, 0.3],
                   scale: [1, 1.02, 1]
                 } : { opacity: 0.3, scale: 1 }}
-                transition={{ duration: 3, repeat: Infinity }}
+                transition={shouldAnimate ? { duration: 3, repeat: Infinity } : undefined}
               />
 
               {/* Coverage radius rings */}
@@ -235,11 +237,11 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                   strokeWidth="2"
                   strokeDasharray="8,8"
                   initial={{ opacity: 0, scale: 0 }}
-                  animate={!isReducedMotion ? {
+                  animate={shouldAnimate ? {
                     opacity: [0.2, 0.4, 0.2],
                     scale: [1, 1.03, 1]
                   } : { opacity: 0.2 }}
-                  transition={{ duration: 4, repeat: Infinity, delay: i * 0.6 }}
+                  transition={shouldAnimate ? { duration: 4, repeat: Infinity, delay: i * 0.6 } : undefined}
                 />
               ))}
 
@@ -257,11 +259,11 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                       r={kallonCoverageRadius}
                       fill="url(#kallonCoverageGradient)"
                       initial={{ opacity: 0 }}
-                      animate={!isReducedMotion ? {
+                      animate={shouldAnimate ? {
                         opacity: [0.2, 0.35, 0.2],
                         scale: [1, 1.05, 1]
                       } : { opacity: 0.2 }}
-                      transition={{ duration: 3, repeat: Infinity, delay: i * 0.4 }}
+                      transition={shouldAnimate ? { duration: 3, repeat: Infinity, delay: i * 0.4 } : undefined}
                     />
                     
                     {/* Kallon coverage border */}
@@ -285,11 +287,11 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                       r={kallonDetectionRadius}
                       fill="url(#kallonDetectionGradient)"
                       initial={{ opacity: 0, scale: 0 }}
-                      animate={!isReducedMotion ? {
+                      animate={shouldAnimate ? {
                         opacity: [0.4, 0.7, 0.4],
                         scale: [1, 1.1, 1]
                       } : { opacity: 0.4 }}
-                      transition={{ duration: 2, repeat: Infinity, delay: i * 0.3 }}
+                      transition={shouldAnimate ? { duration: 2, repeat: Infinity, delay: i * 0.3 } : undefined}
                     />
                     
                     {/* Kallon tower position - enhanced */}
@@ -306,10 +308,10 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                         fill="rgba(74, 144, 226, 0.9)"
                         stroke="white"
                         strokeWidth="3"
-                        animate={!isReducedMotion ? {
+                        animate={shouldAnimate ? {
                           scale: [1, 1.15, 1]
                         } : {}}
-                        transition={{ duration: 2, repeat: Infinity }}
+                        transition={shouldAnimate ? { duration: 2, repeat: Infinity } : undefined}
                       />
                       {/* Tower indicator */}
                       <motion.rect
@@ -319,10 +321,10 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                         height="16"
                         fill="white"
                         rx="2"
-                        animate={!isReducedMotion ? {
+                        animate={shouldAnimate ? {
                           y: [kallonY - 12, kallonY - 14, kallonY - 12]
                         } : {}}
-                        transition={{ duration: 1.5, repeat: Infinity, delay: i * 0.2 }}
+                        transition={shouldAnimate ? { duration: 1.5, repeat: Infinity, delay: i * 0.2 } : undefined}
                       />
                     </motion.g>
                     
@@ -361,11 +363,11 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                         strokeWidth="2"
                         strokeDasharray="4,4"
                         initial={{ opacity: 0 }}
-                        animate={!isReducedMotion ? {
+                        animate={shouldAnimate ? {
                           opacity: [0.2, 0.4, 0.2],
                           scale: [1, 1.05, 1]
                         } : { opacity: 0.2 }}
-                        transition={{ duration: 2.5, repeat: Infinity, delay: index * 0.1 }}
+                        transition={shouldAnimate ? { duration: 2.5, repeat: Infinity, delay: index * 0.1 } : undefined}
                       />
                     )}
                     
@@ -395,11 +397,11 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                         cy={unit.y}
                         r="18"
                         fill="rgba(74, 144, 226, 0.2)"
-                        animate={!isReducedMotion ? {
+                        animate={shouldAnimate ? {
                           scale: [1, 1.3, 1],
                           opacity: [0.2, 0.4, 0.2]
                         } : {}}
-                        transition={{ duration: 2, repeat: Infinity, delay: index * 0.1 }}
+                        transition={shouldAnimate ? { duration: 2, repeat: Infinity, delay: index * 0.1 } : undefined}
                       />
                       
                       {/* Product node */}
@@ -410,10 +412,10 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                         fill="rgba(74, 144, 226, 0.4)"
                         stroke="rgba(74, 144, 226, 0.9)"
                         strokeWidth="2.5"
-                        animate={!isReducedMotion ? {
+                        animate={shouldAnimate ? {
                           scale: [1, 1.1, 1]
                         } : {}}
-                        transition={{ duration: 2, repeat: Infinity, delay: index * 0.1 }}
+                        transition={shouldAnimate ? { duration: 2, repeat: Infinity, delay: index * 0.1 } : undefined}
                       />
                       
                       {/* Product label with unit number */}
@@ -476,11 +478,11 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                   cy={centerY}
                   r="24"
                   fill="rgba(74, 144, 226, 0.3)"
-                  animate={!isReducedMotion ? {
+                  animate={shouldAnimate ? {
                     scale: [1, 1.4, 1],
                     opacity: [0.3, 0.6, 0.3]
                   } : {}}
-                  transition={{ duration: 2, repeat: Infinity }}
+                  transition={shouldAnimate ? { duration: 2, repeat: Infinity } : undefined}
                 />
                 
                 {/* Facility center */}
@@ -491,10 +493,10 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                   fill="rgba(74, 144, 226, 0.9)"
                   stroke="white"
                   strokeWidth="4"
-                  animate={!isReducedMotion ? {
+                  animate={shouldAnimate ? {
                     scale: [1, 1.15, 1]
                   } : {}}
-                  transition={{ duration: 2, repeat: Infinity }}
+                  transition={shouldAnimate ? { duration: 2, repeat: Infinity } : undefined}
                 />
                 
                 <motion.text
@@ -534,19 +536,19 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                   maskImage: 'linear-gradient(to right, transparent, black 5%, black 95%, transparent)',
                   WebkitMaskImage: 'linear-gradient(to right, transparent, black 5%, black 95%, transparent)'
                 }}
-                animate={!isReducedMotion ? {
+                animate={shouldAnimate ? {
                   x: ['-100%', '100%']
                 } : {}}
-                transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
+                transition={shouldAnimate ? { duration: 4, repeat: Infinity, ease: 'linear' } : undefined}
               />
 
               {/* Legend Header */}
               <motion.div
                 className="text-center mb-6"
-                animate={!isReducedMotion ? {
+                animate={shouldAnimate ? {
                   scale: [1, 1.01, 1]
                 } : {}}
-                transition={{ duration: 3, repeat: Infinity }}
+                transition={shouldAnimate ? { duration: 3, repeat: Infinity } : undefined}
               >
                 <h5 className="text-lg md:text-xl font-black text-foreground mb-1">
                   Visualization Legend
@@ -568,18 +570,18 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                   <div className="relative flex-shrink-0">
                     <motion.div
                       className="w-5 h-5 rounded-full bg-primary"
-                      animate={!isReducedMotion ? {
+                      animate={shouldAnimate ? {
                         scale: [1, 1.15, 1]
                       } : {}}
-                      transition={{ duration: 2, repeat: Infinity }}
+                      transition={shouldAnimate ? { duration: 2, repeat: Infinity } : undefined}
                     />
                     <motion.div
                       className="absolute inset-0 rounded-full bg-primary/30"
-                      animate={!isReducedMotion ? {
+                      animate={shouldAnimate ? {
                         scale: [1, 1.4, 1],
                         opacity: [0.3, 0.6, 0.3]
                       } : {}}
-                      transition={{ duration: 2, repeat: Infinity }}
+                      transition={shouldAnimate ? { duration: 2, repeat: Infinity } : undefined}
                     />
                   </div>
                   <div>
@@ -598,17 +600,17 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                   <div className="relative flex-shrink-0">
                     <motion.div
                       className="w-5 h-5 rounded-full bg-primary border-2 border-white"
-                      animate={!isReducedMotion ? {
+                      animate={shouldAnimate ? {
                         scale: [1, 1.1, 1]
                       } : {}}
-                      transition={{ duration: 2, repeat: Infinity }}
+                      transition={shouldAnimate ? { duration: 2, repeat: Infinity } : undefined}
                     />
                     <motion.div
                       className="absolute -top-1 left-1/2 -translate-x-1/2 w-1 h-3 bg-white rounded-sm"
-                      animate={!isReducedMotion ? {
+                      animate={shouldAnimate ? {
                         y: [-1, -2, -1]
                       } : {}}
-                      transition={{ duration: 1.5, repeat: Infinity }}
+                      transition={shouldAnimate ? { duration: 1.5, repeat: Infinity } : undefined}
                     />
                   </div>
                   <div>
@@ -627,11 +629,11 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                   <div className="relative flex-shrink-0">
                     <motion.div
                       className="w-8 h-8 rounded-full border-2 border-dashed border-muted-foreground/40"
-                      animate={!isReducedMotion ? {
+                      animate={shouldAnimate ? {
                         scale: [1, 1.05, 1],
                         opacity: [0.4, 0.6, 0.4]
                       } : {}}
-                      transition={{ duration: 3, repeat: Infinity }}
+                      transition={shouldAnimate ? { duration: 3, repeat: Infinity } : undefined}
                     />
                     <div className="absolute inset-0 rounded-full bg-muted-foreground/10" />
                   </div>
@@ -651,18 +653,18 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                   <div className="relative flex-shrink-0">
                     <motion.div
                       className="w-5 h-5 rounded-full bg-primary/40 border-2 border-primary"
-                      animate={!isReducedMotion ? {
+                      animate={shouldAnimate ? {
                         scale: [1, 1.1, 1]
                       } : {}}
-                      transition={{ duration: 2, repeat: Infinity, delay: 0.2 }}
+                      transition={shouldAnimate ? { duration: 2, repeat: Infinity, delay: 0.2 } : undefined}
                     />
                     <motion.div
                       className="absolute inset-0 rounded-full bg-primary/20"
-                      animate={!isReducedMotion ? {
+                      animate={shouldAnimate ? {
                         scale: [1, 1.3, 1],
                         opacity: [0.2, 0.4, 0.2]
                       } : {}}
-                      transition={{ duration: 2, repeat: Infinity }}
+                      transition={shouldAnimate ? { duration: 2, repeat: Infinity } : undefined}
                     />
                   </div>
                   <div>
@@ -681,11 +683,11 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                   <div className="relative flex-shrink-0">
                     <motion.div
                       className="w-8 h-8 rounded-full border-2 border-primary/30"
-                      animate={!isReducedMotion ? {
+                      animate={shouldAnimate ? {
                         scale: [1, 1.02, 1],
                         opacity: [0.3, 0.5, 0.3]
                       } : {}}
-                      transition={{ duration: 3, repeat: Infinity }}
+                      transition={shouldAnimate ? { duration: 3, repeat: Infinity } : undefined}
                     />
                     <div className="absolute inset-0 rounded-full bg-primary/10" />
                   </div>
@@ -705,11 +707,11 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                   <div className="relative flex-shrink-0">
                     <motion.div
                       className="w-6 h-6 rounded-full bg-primary/30"
-                      animate={!isReducedMotion ? {
+                      animate={shouldAnimate ? {
                         scale: [1, 1.1, 1],
                         opacity: [0.4, 0.7, 0.4]
                       } : {}}
-                      transition={{ duration: 2, repeat: Infinity }}
+                      transition={shouldAnimate ? { duration: 2, repeat: Infinity } : undefined}
                     />
                   </div>
                   <div>
@@ -728,10 +730,10 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                   <div className="relative flex-shrink-0 w-8 h-0.5">
                     <motion.div
                       className="absolute inset-0 border-t-2 border-dashed border-primary/30"
-                      animate={!isReducedMotion ? {
+                      animate={shouldAnimate ? {
                         opacity: [0.3, 0.5, 0.3]
                       } : {}}
-                      transition={{ duration: 2, repeat: Infinity }}
+                      transition={shouldAnimate ? { duration: 2, repeat: Infinity } : undefined}
                     />
                   </div>
                   <div>
@@ -750,11 +752,11 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                   <div className="relative flex-shrink-0">
                     <motion.div
                       className="w-6 h-6 rounded-full border border-primary/30 border-dashed"
-                      animate={!isReducedMotion ? {
+                      animate={shouldAnimate ? {
                         scale: [1, 1.05, 1],
                         opacity: [0.25, 0.4, 0.25]
                       } : {}}
-                      transition={{ duration: 2.5, repeat: Infinity }}
+                      transition={shouldAnimate ? { duration: 2.5, repeat: Infinity } : undefined}
                     />
                   </div>
                   <div>
@@ -767,7 +769,7 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
           </motion.div>
 
           {/* Floating particles */}
-          {!isReducedMotion && Array.from({ length: 8 }).map((_, i) => {
+          {shouldAnimate && Array.from({ length: 8 }).map((_, i) => {
             const hash = (i * 2654435761) % 1000000
             return (
               <motion.div
@@ -784,12 +786,12 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
                   scale: [0, 1.5, 0],
                   x: [0, (i % 2 === 0 ? 20 : -20), 0]
                 }}
-                transition={{
+                transition={shouldAnimate ? {
                   duration: 4 + i * 0.5,
                   repeat: Infinity,
                   delay: i * 0.5,
                   ease: 'easeInOut'
-                }}
+                } : undefined}
               />
             )
           })}

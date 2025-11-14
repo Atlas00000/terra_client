@@ -10,21 +10,24 @@ const inter = Inter({
   subsets: ["latin"],
   weight: ["300", "400", "500", "600", "700"],
   display: 'swap',
-  variable: '--font-inter'
+  variable: '--font-inter',
+  preload: true
 })
 
 const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin"],
   weight: ["400", "500", "600"],
   display: 'swap',
-  variable: '--font-jetbrains'
+  variable: '--font-jetbrains',
+  preload: false
 })
 
 const orbitron = Orbitron({
   subsets: ["latin"],
   weight: ["400", "700", "900"],
   display: 'swap',
-  variable: '--font-orbitron'
+  variable: '--font-orbitron',
+  preload: true
 })
 
 export const metadata: Metadata = {
@@ -41,6 +44,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`dark ${inter.variable} ${jetbrainsMono.variable} ${orbitron.variable}`}>
       <body className={`font-sans antialiased bg-background text-foreground`}>
+        <link rel="preload" as="image" href="/ArtemisOS/autonomous_mission_planning.png" />
         <QueryProvider>
         <ErrorBoundary>
           {children}

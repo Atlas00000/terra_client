@@ -1,5 +1,6 @@
 "use client"
 
+import { memo } from "react"
 import { motion } from "framer-motion"
 import Image from "next/image"
 import { CaseStudy } from "./data"
@@ -9,7 +10,7 @@ interface CaseStudyCardProps {
   isReducedMotion: boolean
 }
 
-export function CaseStudyCard({ study, isReducedMotion }: CaseStudyCardProps) {
+function CaseStudyCardComponent({ study, isReducedMotion }: CaseStudyCardProps) {
   return (
     <motion.div
       className="relative rounded-[32px] overflow-hidden backdrop-blur-xl h-full min-h-[340px]"
@@ -25,6 +26,7 @@ export function CaseStudyCard({ study, isReducedMotion }: CaseStudyCardProps) {
         alt={study.media.alt}
         width={960}
         height={640}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 40vw"
         className="w-full h-full object-cover object-center scale-105"
       />
       <div className="absolute inset-0 z-20 p-6 space-y-4 flex flex-col justify-end">
@@ -43,4 +45,6 @@ export function CaseStudyCard({ study, isReducedMotion }: CaseStudyCardProps) {
     </motion.div>
   )
 }
+
+export const CaseStudyCard = memo(CaseStudyCardComponent)
 

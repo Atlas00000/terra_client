@@ -1,5 +1,6 @@
 "use client"
 
+import { memo } from "react"
 import { motion } from "framer-motion"
 import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
 import { TextWrapContent } from "./data"
@@ -8,7 +9,7 @@ interface TextWrapProps {
   content: TextWrapContent
 }
 
-export function TextWrap({ content }: TextWrapProps) {
+function TextWrapComponent({ content }: TextWrapProps) {
   const { isReducedMotion, getAnimationSettings } = useMobileOptimization()
   const animationSettings = getAnimationSettings()
 
@@ -84,4 +85,6 @@ export function TextWrap({ content }: TextWrapProps) {
     </section>
   )
 }
+
+export const TextWrap = memo(TextWrapComponent)
 

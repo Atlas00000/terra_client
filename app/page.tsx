@@ -1,5 +1,6 @@
 "use client"
 
+import dynamic from "next/dynamic"
 import { Header } from "@/components/header"
 import { MobileHeader } from "@/components/mobile-header"
 import { Footer } from "@/components/footer"
@@ -7,7 +8,6 @@ import { Loading } from "@/components/loading"
 import { MobileLayout } from "@/components/mobile-layout"
 import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
 import { useState, useEffect } from "react"
-// import dynamic from "next/dynamic"
 
 // ═══════════════════════════════════════════════════════════════════════════
 // SECTION COMPONENTS - Commented out but kept for future use
@@ -19,9 +19,6 @@ import { ProductHeroSection } from "@/components/sections/product-hero"
 import { ProductStackConfigurator } from "@/components/sections/product-stack-configurator"
 import { WhoWeAreSection } from "@/components/sections/who-we-are-section"
 import { ProductEcosystemSection } from "@/components/sections/product-ecosystem"
-import { InteractiveDemosSection } from "@/components/sections/interactive-demos"
-import { TechnicalSpecsDownloadSection } from "@/components/sections/spec-download"
-import { ConversionFooterSection } from "@/components/sections/conversion-footer"
 import { TextWrap } from "@/components/sections/text-wraps/text-wrap"
 import { TEXT_WRAP_CONTENT } from "@/components/sections/text-wraps/data"
 // IntegrationReadinessAssessment component kept for future use
@@ -48,10 +45,26 @@ import { TEXT_WRAP_CONTENT } from "@/components/sections/text-wraps/data"
 //   { ssr: false }
 // )
 
-// const MobileProductSlideshow = dynamic(
-//   () => import('@/components/mobile-product-slideshow').then(mod => ({ default: mod.MobileProductSlideshow })),
-//   { ssr: false }
-// )
+const SectionFallback = ({ label }: { label: string }) => (
+  <section className="py-24 text-center text-white/50">
+    <p>{label}</p>
+  </section>
+)
+
+const InteractiveDemosSection = dynamic(
+  () => import("@/components/sections/interactive-demos").then(mod => ({ default: mod.InteractiveDemosSection })),
+  { ssr: false, loading: () => <SectionFallback label="Preparing live demo…" /> }
+)
+
+const TechnicalSpecsDownloadSection = dynamic(
+  () => import("@/components/sections/spec-download").then(mod => ({ default: mod.TechnicalSpecsDownloadSection })),
+  { ssr: false, loading: () => <SectionFallback label="Loading spec resources…" /> }
+)
+
+const ConversionFooterSection = dynamic(
+  () => import("@/components/sections/conversion-footer").then(mod => ({ default: mod.ConversionFooterSection })),
+  { ssr: false, loading: () => <SectionFallback label="Opening engagement hub…" /> }
+)
 
 export default function Home() {
   const [isLoaded, setIsLoaded] = useState(false)

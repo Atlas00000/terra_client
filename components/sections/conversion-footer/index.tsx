@@ -11,31 +11,19 @@ export function ConversionFooterSection() {
 
   return (
     <section className="relative py-24 overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(2,6,15,0.95),_rgba(3,7,18,1))] text-white">
-      <div className="absolute inset-0 pointer-events-none">
-        <motion.div
-          className="absolute inset-0 opacity-40"
-          style={{
-            backgroundImage: `
-              radial-gradient(circle at 25% 20%, rgba(74,144,226,0.25), transparent 50%),
-              radial-gradient(circle at 75% 10%, rgba(255,147,54,0.2), transparent 45%)
-            `
-          }}
-          animate={!isReducedMotion ? { opacity: [0.3, 0.6, 0.3] } : { opacity: 0.4 }}
-          transition={{ duration: 14, repeat: Infinity }}
-        />
-        <motion.div
-          className="absolute inset-0 opacity-10"
-          style={{
-            backgroundImage: `
-              linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
-              linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)
-            `,
-            backgroundSize: "80px 80px"
-          }}
-          animate={!isReducedMotion ? { backgroundPosition: ["0px 0px", "80px 80px"] } : {}}
-          transition={{ duration: 40, repeat: Infinity, ease: "linear" }}
-        />
-      </div>
+      <div
+        className="absolute inset-0 pointer-events-none"
+        style={{
+          backgroundImage: `
+            radial-gradient(circle at 25% 20%, rgba(74,144,226,0.2), transparent 55%),
+            radial-gradient(circle at 75% 10%, rgba(255,147,54,0.15), transparent 50%),
+            linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px)
+          `,
+          backgroundSize: "auto, auto, 80px 80px, 80px 80px",
+          opacity: 0.35
+        }}
+      />
 
       <div className="relative z-10 max-w-[80vw] mx-auto px-6 space-y-16">
         <motion.div

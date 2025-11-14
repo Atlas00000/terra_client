@@ -113,6 +113,7 @@ export function HeroSlide({ slide, isActive, animationSettings, isReducedMotion 
             width={960}
             height={640}
             priority
+            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 60vw, 45vw"
             className="w-full h-full object-cover"
           />
           <div className="absolute bottom-0 left-0 right-0 p-6 z-20">

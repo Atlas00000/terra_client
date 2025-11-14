@@ -27,6 +27,7 @@ export function ResourceCard({ resource, onClick, isReducedMotion }: ResourceCar
         alt={resource.title}
         width={600}
         height={400}
+        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
         className="w-full h-full object-cover"
       />
       <div className="absolute inset-0 z-20 p-6 flex flex-col justify-end space-y-3">

@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { memo, useState } from "react"
 import { motion } from "framer-motion"
 import { SURVEILLANCE_SEGMENTS } from "./data"
 
@@ -8,7 +8,7 @@ interface TimelineProps {
   isReducedMotion: boolean
 }
 
-export function SurveillanceTimeline({ isReducedMotion }: TimelineProps) {
+function SurveillanceTimelineComponent({ isReducedMotion }: TimelineProps) {
   const [activeIndex, setActiveIndex] = useState(0)
   const activeSegment = SURVEILLANCE_SEGMENTS[activeIndex]
 
@@ -59,4 +59,6 @@ export function SurveillanceTimeline({ isReducedMotion }: TimelineProps) {
     </div>
   )
 }
+
+export const SurveillanceTimeline = memo(SurveillanceTimelineComponent)
 

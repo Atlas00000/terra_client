@@ -12,19 +12,15 @@ export function InteractiveDemosSection() {
 
   return (
     <section id="interactive-demos" className="relative py-24 overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(9,18,35,0.9),_rgba(3,7,18,1))] text-white">
-      <div className="absolute inset-0">
-        <motion.div
-          className="absolute inset-0 opacity-20"
-          style={{
-            backgroundImage: `
-              radial-gradient(circle at 25% 25%, rgba(3,7,18,0.65), transparent 55%),
-              radial-gradient(circle at 75% 20%, rgba(3,7,18,0.5), transparent 45%)
-            `
-          }}
-          animate={!isReducedMotion ? { opacity: [0.15, 0.3, 0.15] } : { opacity: 0.2 }}
-          transition={{ duration: 14, repeat: Infinity }}
-        />
-      </div>
+      <div
+        className="absolute inset-0 opacity-20 pointer-events-none"
+        style={{
+          backgroundImage: `
+            radial-gradient(circle at 25% 25%, rgba(3,7,18,0.65), transparent 55%),
+            radial-gradient(circle at 75% 20%, rgba(3,7,18,0.5), transparent 45%)
+          `
+        }}
+      />
 
       <div className="relative z-10 max-w-[80vw] mx-auto px-6 space-y-16">
         <motion.div

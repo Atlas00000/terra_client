@@ -14,27 +14,23 @@ export function HeroBackground({ accent, isReducedMotion }: HeroBackgroundProps)
   return (
     <div className="absolute inset-0 overflow-hidden">
       {/* Base gradient */}
-      <motion.div
+      <div
         className="absolute inset-0"
         style={{
           background: "linear-gradient(180deg, rgba(3,7,18,0.95) 0%, rgba(3,7,18,0.85) 40%, rgba(3,7,18,0.6) 100%)"
         }}
-        animate={!isReducedMotion ? { opacity: [0.95, 0.85, 0.95] } : { opacity: 0.9 }}
-        transition={{ duration: 20, repeat: Infinity }}
       />
 
       {/* Accent bloom */}
-      <motion.div
+      <div
         className="absolute -inset-32 blur-[120px] opacity-50"
         style={{
           background: `radial-gradient(circle at 30% 30%, ${accent}, transparent 55%)`
         }}
-        animate={!isReducedMotion ? { scale: [0.9, 1.1, 0.9] } : { scale: 1 }}
-        transition={{ duration: 8, repeat: Infinity }}
       />
 
       {/* Grid */}
-      <motion.div
+      <div
         className="absolute inset-0 opacity-20"
         style={{
           backgroundImage: `
@@ -43,12 +39,10 @@ export function HeroBackground({ accent, isReducedMotion }: HeroBackgroundProps)
           `,
           backgroundSize: "80px 80px"
         }}
-        animate={!isReducedMotion ? { backgroundPosition: ["0px 0px", "80px 80px"] } : {}}
-        transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
       />
 
       {/* Particles */}
-      {Array.from({ length: 24 }).map((_, idx) => {
+      {Array.from({ length: 12 }).map((_, idx) => {
         const left = (idx * 73) % 100
         const top = (idx * 137) % 100
         return (
