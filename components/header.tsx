@@ -41,8 +41,8 @@ export function Header() {
       animate={{ y: 0 }}
       transition={{ duration: 0.6, ease: "easeOut" }}
     >
-      <div className="max-w-7xl mx-auto px-6 py-6 flex items-center justify-between">
-        <Link href="/">
+      <div className="max-w-[80vw] mx-auto px-6 py-6 flex items-center justify-between">
+        <Link href="/" className="flex-1">
           <motion.div className="flex items-center gap-3 cursor-pointer" whileHover={{ scale: 1.05 }} transition={{ duration: 0.3 }}>
             <motion.div
               className="w-12 h-12 rounded-lg flex items-center justify-center border border-terra-silver/30 glow-pulse overflow-hidden"

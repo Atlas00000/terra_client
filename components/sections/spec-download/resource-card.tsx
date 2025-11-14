@@ -13,7 +13,11 @@ interface ResourceCardProps {
 export function ResourceCard({ resource, onClick, isReducedMotion }: ResourceCardProps) {
   return (
     <motion.button
-      className="relative rounded-[32px] overflow-hidden border border-white/10 bg-gradient-to-br from-white/5 to-white/0 backdrop-blur-xl text-left"
+      className="relative rounded-[32px] overflow-hidden backdrop-blur-xl text-left"
+      style={{
+        background: "radial-gradient(circle at 25% 25%, rgba(255,255,255,0.08), transparent 70%)",
+        border: "1px solid rgba(255,255,255,0.08)"
+      }}
       onClick={() => onClick(resource)}
       whileHover={!isReducedMotion ? { scale: 1.02 } : {}}
     >

@@ -12,16 +12,20 @@ interface CaseStudyCardProps {
 export function CaseStudyCard({ study, isReducedMotion }: CaseStudyCardProps) {
   return (
     <motion.div
-      className="relative rounded-[32px] overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl"
+      className="relative rounded-[32px] overflow-hidden backdrop-blur-xl h-full min-h-[340px]"
+      style={{
+        background: "radial-gradient(circle at 25% 25%, rgba(255,255,255,0.08), transparent 70%)",
+        border: "1px solid rgba(255,255,255,0.08)"
+      }}
       whileHover={!isReducedMotion ? { scale: 1.02 } : {}}
     >
-      <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-transparent to-black/30 z-10" />
+      <div className="absolute inset-0 bg-gradient-to-br from-black/45 via-transparent to-black/25 z-10" />
       <Image
         src={study.media.image}
         alt={study.media.alt}
         width={960}
         height={640}
-        className="w-full h-full object-cover"
+        className="w-full h-full object-cover object-center scale-105"
       />
       <div className="absolute inset-0 z-20 p-6 space-y-4 flex flex-col justify-end">
         <div className="text-xs uppercase tracking-widest text-white/70">{study.location}</div>

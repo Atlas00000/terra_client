@@ -21,29 +21,12 @@ export function InquiryForm({ isReducedMotion }: InquiryFormProps) {
     infrastructure: "",
     message: ""
   })
-  const [leadScore, setLeadScore] = useState(60)
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [status, setStatus] = useState<"idle" | "success" | "error">("idle")
   const [error, setError] = useState("")
 
-  const computeLeadScore = (priority: string) => {
-    switch (priority) {
-      case "Funded project (budget secured)":
-        return 95
-      case "Executive mandate in progress":
-        return 85
-      case "Pilot deployment scoped":
-        return 75
-      default:
-        return 60
-    }
-  }
-
   const handleChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
-    if (field === "priority") {
-      setLeadScore(computeLeadScore(value))
-    }
   }
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -61,8 +44,7 @@ export function InquiryForm({ isReducedMotion }: InquiryFormProps) {
           region: formData.region,
           threatScenario: formData.threatScenario,
           priority: formData.priority,
-          infrastructure: formData.infrastructure,
-          leadScore
+          infrastructure: formData.infrastructure
         },
         message: formData.message
       })
@@ -77,7 +59,6 @@ export function InquiryForm({ isReducedMotion }: InquiryFormProps) {
         infrastructure: "",
         message: ""
       })
-      setLeadScore(60)
     } catch (err: any) {
       setStatus("error")
       setError(err.response?.data?.message || "Unable to submit inquiry. Please try again.")
@@ -192,19 +173,6 @@ export function InquiryForm({ isReducedMotion }: InquiryFormProps) {
           className="w-full mt-1 rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-sm focus:ring-2 focus:ring-white/20"
           placeholder="Describe current operations, pain points, or technology stack…"
         />
-      </div>
-
-      <div className="rounded-2xl border border-white/10 bg-black/40 p-4">
-        <div className="flex items-center justify-between text-sm text-white/70">
-          <span>Lead Score</span>
-          <span className="font-black text-white">{leadScore}</span>
-        </div>
-        <div className="mt-2 h-2 rounded-full bg-white/10 overflow-hidden">
-          <div
-            className="h-full bg-gradient-to-r from-primary via-orange-400 to-red-400"
-            style={{ width: `${leadScore}%` }}
-          />
-        </div>
       </div>
 
       {status === "error" && (

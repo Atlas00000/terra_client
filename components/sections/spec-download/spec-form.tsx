@@ -73,7 +73,11 @@ export function SpecForm({ resource, onClose, isReducedMotion }: SpecFormProps) 
             exit={{ opacity: 0 }}
           />
           <motion.div
-            className="relative z-10 w-full max-w-2xl rounded-[32px] border border-white/10 bg-[#030712]/95 text-white p-8 shadow-[0_40px_120px_rgba(0,0,0,0.6)]"
+            className="relative z-10 w-full max-w-2xl rounded-[32px] text-white p-8 shadow-[0_40px_120px_rgba(0,0,0,0.6)] backdrop-blur-2xl"
+            style={{
+              background: "rgba(3,7,18,0.92)",
+              border: "1px solid rgba(255,255,255,0.08)"
+            }}
             initial={{ opacity: 0, scale: 0.9, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}

@@ -46,7 +46,7 @@ export function ConversionFooterSection() {
           transition={animationSettings}
         >
           <div className="inline-flex items-center gap-3 px-6 py-2 rounded-full border border-white/15 bg-white/5 backdrop-blur-xl text-xs tracking-[0.4rem] uppercase text-white/60">
-            Final Conversion
+            Engagement Hub
           </div>
           <h2 className="text-4xl md:text-6xl font-black">
             Secure <span className="text-primary">Your Deployment Window</span>

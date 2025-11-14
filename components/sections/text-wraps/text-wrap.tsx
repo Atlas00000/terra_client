@@ -42,19 +42,17 @@ export function TextWrap({ content }: TextWrapProps) {
 
       <div className="relative z-10 max-w-[80vw] mx-auto px-6">
         <motion.div
-          className="group relative rounded-[36px] border border-white/10 bg-white/5 backdrop-blur-2xl p-6 md:p-10 shadow-[0_40px_120px_rgba(3,7,18,0.65)] overflow-hidden"
+          className="group relative rounded-[36px] bg-transparent backdrop-blur-xl p-6 md:p-10"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={animationSettings}
         >
           <motion.div
-            className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-white/10 via-transparent to-white/10"
-            animate={!isReducedMotion ? { x: ["-30%", "130%"] } : {}}
-            transition={{ duration: 6, repeat: Infinity }}
+          className="absolute inset-0 opacity-0 group-hover:opacity-100 bg-gradient-to-r from-white/10 via-transparent to-white/10"
           />
           <div className="relative z-10 space-y-4">
-            <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full border border-white/15 bg-white/5 text-xs uppercase tracking-[0.4rem] text-white/60">
+            <div className="inline-flex items-center gap-2 px-4 py-1 rounded-full bg-white/5 text-xs uppercase tracking-[0.4rem] text-white/60">
               <motion.span
                 className="w-1.5 h-1.5 rounded-full bg-primary"
                 animate={!isReducedMotion ? { scale: [1, 1.3, 1], opacity: [1, 0.5, 1] } : {}}
@@ -73,7 +71,7 @@ export function TextWrap({ content }: TextWrapProps) {
                 {content.metrics.map(metric => (
                   <span
                     key={metric}
-                    className="px-4 py-1 rounded-full border border-white/15 bg-white/5 backdrop-blur text-[0.7rem]"
+                    className="px-4 py-1 rounded-full bg-white/5 backdrop-blur text-[0.7rem]"
                   >
                     {metric}
                   </span>

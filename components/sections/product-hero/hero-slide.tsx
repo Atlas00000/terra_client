@@ -47,13 +47,15 @@ export function HeroSlide({ slide, isActive, animationSettings, isReducedMotion 
           {slide.stats.map((stat, idx) => (
             <div
               key={idx}
-              className="relative p-5 rounded-3xl border border-white/10 bg-white/[0.04] backdrop-blur-xl overflow-hidden"
+              className="relative p-5 rounded-[28px]"
+              style={{
+                background:
+                  "radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08), transparent 60%)",
+                border: "1px solid rgba(255,255,255,0.08)"
+              }}
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-70" />
-              <div className="relative">
-                <div className="text-xs text-white/60 uppercase tracking-wide">{stat.label}</div>
-                <div className="text-3xl font-black text-white">{stat.value}</div>
-              </div>
+              <div className="text-xs text-white/60 uppercase tracking-wide">{stat.label}</div>
+              <div className="text-3xl font-black text-white">{stat.value}</div>
             </div>
           ))}
         </div>
@@ -62,7 +64,12 @@ export function HeroSlide({ slide, isActive, animationSettings, isReducedMotion 
           {slide.highlights.map((highlight, idx) => (
             <div key={idx} className="flex items-start gap-3 text-white/80">
               <motion.div
-                className="w-8 h-8 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-sm font-bold text-white/70"
+                className="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white/70"
+                style={{
+                  background:
+                    "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.12), transparent 65%)",
+                  border: "1px solid rgba(255,255,255,0.08)"
+                }}
                 whileHover={!isReducedMotion ? { rotate: 360 } : {}}
               >
                 {idx + 1}
@@ -98,8 +105,8 @@ export function HeroSlide({ slide, isActive, animationSettings, isReducedMotion 
         animate={{ opacity: isActive ? 1 : 0, scale: isActive ? 1 : 0.9 }}
         transition={{ ...animationSettings, delay: 0.1 }}
       >
-        <div className="relative rounded-[36px] overflow-hidden border border-white/10 shadow-[0_40px_100px_rgba(5,7,18,0.65)] bg-gradient-to-br from-white/10 to-transparent">
-          <div className="absolute inset-0 bg-gradient-to-br from-black/40 via-transparent to-black/20 z-10" />
+        <div className="relative rounded-[36px] overflow-hidden shadow-[0_40px_100px_rgba(5,7,18,0.65)]">
+          <div className="absolute inset-0 bg-gradient-to-br from-black/25 via-transparent to-black/10 z-10" />
           <Image
             src={slide.visual.image}
             alt={slide.visual.alt}
@@ -114,8 +121,8 @@ export function HeroSlide({ slide, isActive, animationSettings, isReducedMotion 
         </div>
 
         {/* Floating spec chip */}
-        <motion.div
-          className="absolute -left-10 top-6 p-4 rounded-2xl bg-black/60 border border-white/10 backdrop-blur-xl text-white/80 text-xs uppercase tracking-wide"
+                <motion.div
+                  className="absolute -left-10 top-6 p-4 rounded-2xl bg-black/60 backdrop-blur-xl text-white/80 text-xs uppercase tracking-wide"
           animate={!isReducedMotion ? { y: [0, -10, 0] } : {}}
           transition={{ duration: 6, repeat: Infinity }}
         >
@@ -123,7 +130,11 @@ export function HeroSlide({ slide, isActive, animationSettings, isReducedMotion 
         </motion.div>
 
         <motion.div
-          className="absolute -right-8 bottom-10 p-5 rounded-3xl bg-white/10 border border-white/30 backdrop-blur-xl text-white"
+          className="absolute -right-8 bottom-10 p-5 rounded-3xl text-white"
+          style={{
+            background: "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.14), transparent 65%)",
+            border: "1px solid rgba(255,255,255,0.08)"
+          }}
           animate={!isReducedMotion ? { opacity: [0.8, 1, 0.8] } : { opacity: 0.9 }}
           transition={{ duration: 4, repeat: Infinity }}
         >

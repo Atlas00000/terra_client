@@ -13,9 +13,15 @@ export function SurveillanceTimeline({ isReducedMotion }: TimelineProps) {
   const activeSegment = SURVEILLANCE_SEGMENTS[activeIndex]
 
   return (
-    <div className="rounded-[32px] border border-white/10 bg-white/5/">
-      <div className="grid md:grid-cols-[200px,1fr] divide-y md:divide-y-0 md:divide-x divide-white/10">
-        <div className="flex md:flex-col overflow-x-auto md:overflow-visible">
+    <div
+      className="rounded-[32px] overflow-hidden"
+      style={{
+        background: "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08), transparent 65%)",
+        border: "1px solid rgba(255,255,255,0.08)"
+      }}
+    >
+      <div className="grid md:grid-cols-[200px,1fr] divide-y md:divide-y-0 md:divide-x divide-white/5">
+        <div className="flex md:flex-col overflow-x-auto md:overflow-visible bg-white/5/">
           {SURVEILLANCE_SEGMENTS.map((segment, index) => {
             const isActive = index === activeIndex
             return (

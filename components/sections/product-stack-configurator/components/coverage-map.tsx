@@ -138,35 +138,15 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
       })}
 
       {/* Main fluid container */}
-      <div className="relative">
-        {/* Dynamic gradient background */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-primary/10 via-muted/5 to-primary/10 opacity-50"
-          style={{
-            clipPath: 'polygon(0% 0%, 100% 0%, 100% 88%, 92% 100%, 8% 100%, 0% 92%)'
-          }}
-        />
-
-        {/* Glassmorphism fluid surface */}
+      <div className="relative max-w-5xl mx-auto">
         <div
-          className="relative z-10 p-8 md:p-12 backdrop-blur-2xl bg-gradient-to-br from-white/8 via-white/5 to-transparent"
+          className="relative z-10 p-8 md:p-12 backdrop-blur-2xl"
           style={{
-            clipPath: 'polygon(0% 0%, 100% 0%, 100% 88%, 92% 100%, 8% 100%, 0% 92%)'
+            clipPath: 'polygon(0% 0%, 100% 0%, 100% 88%, 92% 100%, 8% 100%, 0% 92%)',
+            background: 'radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08), transparent 70%)',
+            border: '1px solid rgba(255,255,255,0.08)'
           }}
         >
-          {/* Animated border glow */}
-          <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-primary/20 via-muted-foreground/20 to-primary/20 opacity-0 group-hover:opacity-100"
-            style={{
-              clipPath: 'polygon(0% 0%, 100% 0%, 100% 88%, 92% 100%, 8% 100%, 0% 92%)',
-              maskImage: 'linear-gradient(to right, transparent, black 5%, black 95%, transparent)',
-              WebkitMaskImage: 'linear-gradient(to right, transparent, black 5%, black 95%, transparent)'
-            }}
-            animate={!isReducedMotion ? {
-              x: ['-100%', '100%']
-            } : {}}
-            transition={{ duration: 4, repeat: Infinity, ease: 'linear' }}
-          />
 
           {/* Header */}
           <motion.div
@@ -190,7 +170,7 @@ export function CoverageMap({ recommendation, facilityType, coverageArea, animat
           </motion.div>
 
           {/* Interactive SVG Visualization */}
-          <div className="relative w-full flex justify-center mb-8">
+          <div className="relative w-full flex justify-center mb-8 max-w-xl mx-auto">
             <svg
               width={svgSize}
               height={svgSize}

@@ -5,31 +5,24 @@ import { useMobileOptimization } from "@/hooks/use-mobile-optimization"
 import { SurveillanceTimeline } from "./timeline"
 import { CASE_STUDIES } from "./data"
 import { CaseStudyCard } from "./case-study-card"
-import { useMemo } from "react"
 
 export function InteractiveDemosSection() {
   const { isReducedMotion, getAnimationSettings } = useMobileOptimization()
   const animationSettings = getAnimationSettings()
 
-  const caseGrid = useMemo(() => {
-    const first = CASE_STUDIES[0]
-    const rest = CASE_STUDIES.slice(1)
-    return { first, rest }
-  }, [])
-
   return (
     <section id="interactive-demos" className="relative py-24 overflow-hidden bg-[radial-gradient(circle_at_top,_rgba(9,18,35,0.9),_rgba(3,7,18,1))] text-white">
       <div className="absolute inset-0">
         <motion.div
-          className="absolute inset-0 opacity-40"
+          className="absolute inset-0 opacity-20"
           style={{
             backgroundImage: `
-              radial-gradient(circle at 30% 30%, rgba(88,179,255,0.15), transparent 40%),
-              radial-gradient(circle at 70% 20%, rgba(255,147,54,0.15), transparent 45%)
+              radial-gradient(circle at 25% 25%, rgba(3,7,18,0.65), transparent 55%),
+              radial-gradient(circle at 75% 20%, rgba(3,7,18,0.5), transparent 45%)
             `
           }}
-          animate={!isReducedMotion ? { opacity: [0.3, 0.6, 0.3] } : { opacity: 0.4 }}
-          transition={{ duration: 12, repeat: Infinity }}
+          animate={!isReducedMotion ? { opacity: [0.15, 0.3, 0.15] } : { opacity: 0.2 }}
+          transition={{ duration: 14, repeat: Infinity }}
         />
       </div>
 
@@ -60,13 +53,23 @@ export function InteractiveDemosSection() {
           transition={animationSettings}
         >
           <div className="space-y-6">
-            <div className="rounded-[36px] border border-white/10 bg-white/5 backdrop-blur-xl p-6 space-y-4">
+            <div
+              className="rounded-[36px] backdrop-blur-xl p-6 space-y-4"
+              style={{
+                background: "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08), transparent 70%)",
+                border: "1px solid rgba(255,255,255,0.08)"
+              }}
+            >
               <h3 className="text-2xl font-black">Flight Timeline</h3>
               <p className="text-sm text-white/70">Follow a single Iroko mission covering hydro plants, border segments, and returns to ArtemisOS command for the next sortie.</p>
               <SurveillanceTimeline isReducedMotion={isReducedMotion} />
             </div>
             <motion.div
-              className="rounded-[36px] border border-white/10 bg-gradient-to-br from-white/10 to-transparent p-6"
+              className="rounded-[36px] p-6"
+              style={{
+                background: "radial-gradient(circle at 20% 20%, rgba(255,255,255,0.08), transparent 70%)",
+                border: "1px solid rgba(255,255,255,0.08)"
+              }}
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
@@ -83,11 +86,8 @@ export function InteractiveDemosSection() {
           </div>
 
           <div className="space-y-6">
-            {caseGrid.first && (
-              <CaseStudyCard study={caseGrid.first} isReducedMotion={isReducedMotion} />
-            )}
             <div className="grid md:grid-cols-2 gap-6">
-              {caseGrid.rest.map(study => (
+              {CASE_STUDIES.map(study => (
                 <CaseStudyCard key={study.id} study={study} isReducedMotion={isReducedMotion} />
               ))}
             </div>
