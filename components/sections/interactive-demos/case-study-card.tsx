@@ -1,0 +1,42 @@
+"use client"
+
+import { motion } from "framer-motion"
+import Image from "next/image"
+import { CaseStudy } from "./data"
+
+interface CaseStudyCardProps {
+  study: CaseStudy
+  isReducedMotion: boolean
+}
+
+export function CaseStudyCard({ study, isReducedMotion }: CaseStudyCardProps) {
+  return (
+    <motion.div
+      className="relative rounded-[32px] overflow-hidden border border-white/10 bg-white/5 backdrop-blur-xl"
+      whileHover={!isReducedMotion ? { scale: 1.02 } : {}}
+    >
+      <div className="absolute inset-0 bg-gradient-to-br from-black/50 via-transparent to-black/30 z-10" />
+      <Image
+        src={study.media.image}
+        alt={study.media.alt}
+        width={960}
+        height={640}
+        className="w-full h-full object-cover"
+      />
+      <div className="absolute inset-0 z-20 p-6 space-y-4 flex flex-col justify-end">
+        <div className="text-xs uppercase tracking-widest text-white/70">{study.location}</div>
+        <h3 className="text-2xl font-black text-white">{study.title}</h3>
+        <p className="text-white/80 text-sm leading-relaxed">{study.narrative}</p>
+        <div className="space-y-2">
+          {study.outcomes.map(outcome => (
+            <div key={outcome} className="flex items-center gap-2 text-white/80 text-sm">
+              <span className="w-1.5 h-1.5 rounded-full bg-white/60" />
+              {outcome}
+            </div>
+          ))}
+        </div>
+      </div>
+    </motion.div>
+  )
+}
+

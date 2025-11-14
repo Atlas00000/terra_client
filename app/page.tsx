@@ -17,7 +17,13 @@ import { useState, useEffect } from "react"
 import { ProductHeroSection } from "@/components/sections/product-hero"
 // import { WhoWeAreSection } from "@/components/sections/who-we-are-section"
 import { ProductStackConfigurator } from "@/components/sections/product-stack-configurator"
+import { WhoWeAreSection } from "@/components/sections/who-we-are-section"
 import { ProductEcosystemSection } from "@/components/sections/product-ecosystem"
+import { InteractiveDemosSection } from "@/components/sections/interactive-demos"
+import { TechnicalSpecsDownloadSection } from "@/components/sections/spec-download"
+import { ConversionFooterSection } from "@/components/sections/conversion-footer"
+import { TextWrap } from "@/components/sections/text-wraps/text-wrap"
+import { TEXT_WRAP_CONTENT } from "@/components/sections/text-wraps/data"
 // IntegrationReadinessAssessment component kept for future use
 // import { IntegrationReadinessAssessment } from "@/components/sections/integration-readiness-assessment/index"
 
@@ -84,12 +90,35 @@ export default function Home() {
         {/* Section 1: Product Hero */}
         <ProductHeroSection />
 
-        {/* Section 2: Interactive Qualification Tools */}
+        <TextWrap content={TEXT_WRAP_CONTENT.heroToWho} />
+
+        {/* Section 2: Who We Are */}
+        <WhoWeAreSection />
+
+        <TextWrap content={TEXT_WRAP_CONTENT.whoToConfigurator} />
+
+        {/* Section 3: Interactive Qualification Tools */}
         <ProductStackConfigurator />
         
-        {/* Section 5: Product Ecosystem (Technical Depth) */}
-        {/* IntegrationReadinessAssessment - Removed for now, component available for reuse */}
+        <TextWrap content={TEXT_WRAP_CONTENT.configuratorToEcosystem} />
+
+        {/* Section 4: Product Ecosystem (Technical Depth) */}
         <ProductEcosystemSection />
+
+        <TextWrap content={TEXT_WRAP_CONTENT.ecosystemToDemos} />
+
+        {/* Section 5: Interactive Demos */}
+        <InteractiveDemosSection />
+
+        <TextWrap content={TEXT_WRAP_CONTENT.demosToSpecs} />
+
+        {/* Section 6: Technical Specifications Download */}
+        <TechnicalSpecsDownloadSection />
+
+        <TextWrap content={TEXT_WRAP_CONTENT.specsToFooter} />
+
+        {/* Section 7: Conversion Footer */}
+        <ConversionFooterSection />
 
         {/* Footer */}
         <Footer />
