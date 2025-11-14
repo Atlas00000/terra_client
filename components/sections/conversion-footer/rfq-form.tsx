@@ -35,7 +35,7 @@ export function RfqForm({ isReducedMotion }: RfqFormProps) {
     setStatus("idle")
     setError("")
     try {
-      await apiClient.post(API_ENDPOINTS.RFQ.CREATE, {
+      await apiClient.post(API_ENDPOINTS.RFQ.LIST, {
         fullName: formData.fullName,
         email: formData.email,
         phone: formData.phone,
