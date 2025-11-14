@@ -36,6 +36,40 @@ export interface ProductRecommendation {
     product: string
     time: string
   }[]
+  // Enhanced fields
+  score?: RecommendationScore
+  explanation?: RecommendationExplanation
+  validation?: ValidationResult
+}
+
+// Recommendation scoring
+export interface RecommendationScore {
+  coverageScore: number      // 0-100: How well coverage is met
+  threatScore: number        // 0-100: How well threat is addressed
+  costScore: number          // 0-100: Cost efficiency
+  redundancyScore: number    // 0-100: Redundancy level
+  overallScore: number        // Weighted average
+  confidence: 'high' | 'medium' | 'low'
+}
+
+// Recommendation explanation
+export interface RecommendationExplanation {
+  products: {
+    name: string
+    quantity: number
+    reasoning: string[]  // Why this product, why this quantity
+  }[]
+  totalCoverage: number
+  coverageGaps: string[]
+  costEstimate?: number
+  confidence: 'high' | 'medium' | 'low'
+}
+
+// Validation result
+export interface ValidationResult {
+  isValid: boolean
+  errors: string[]
+  warnings: string[]
 }
 
 export interface ConfiguratorState {

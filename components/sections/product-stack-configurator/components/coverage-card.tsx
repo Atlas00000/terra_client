@@ -162,9 +162,9 @@ export function CoverageCard({ content, isSelected, onSelect, index, animationSe
 
           {/* Content */}
           <div className="relative z-20 space-y-4">
-            {/* Coverage label - large and bold */}
+            {/* Coverage label - reduced size for distance */}
             <motion.div
-              className="text-5xl md:text-6xl font-black text-primary leading-none"
+              className="text-3xl md:text-4xl font-black text-primary leading-none"
               animate={isSelected && !isReducedMotion ? {
                 scale: [1, 1.05, 1]
               } : {}}

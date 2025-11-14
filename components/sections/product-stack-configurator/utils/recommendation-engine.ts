@@ -1,7 +1,26 @@
 import { FacilityType, ThreatLevel, CoverageArea, ProductRecommendation } from "./types"
 import { PRODUCT_SPECS, FACILITY_REQUIREMENTS } from "./product-specs"
+import { 
+  calculateKallonQuantity,
+  calculateIrokoQuantity,
+  calculateArcherQuantity,
+  calculateDumaQuantity,
+  calculateGenericProductQuantity
+} from "./calculators/product-calculators"
+import { analyzeThreat } from "./calculators/threat-analyzer"
+import { validateRecommendation } from "./validation/recommendation-validator"
+import { scoreRecommendation } from "./scoring/recommendation-scorer"
+import { explainRecommendation } from "./explainability/recommendation-explainer"
 
-// Calculate product quantities based on coverage area
+/**
+ * Main Recommendation Engine
+ * Orchestrates modular components to generate product recommendations
+ * Following industry best practices with validation, scoring, and explainability
+ */
+
+/**
+ * Calculate product quantities using modular product-specific calculators
+ */
 function calculateQuantities(
   facilityType: FacilityType,
   threatLevel: ThreatLevel,
@@ -9,28 +28,6 @@ function calculateQuantities(
 ): { product: string; quantity: number; capability: string }[] {
   const facility = FACILITY_REQUIREMENTS[facilityType]
   if (!facility) return []
-
-  // Parse coverage area to number
-  const coverageMap: Record<CoverageArea, { min: number; max: number }> = {
-    "0-5km": { min: 0, max: 5 },
-    "5-15km": { min: 5, max: 15 },
-    "15-50km": { min: 15, max: 50 },
-    "50km-plus": { min: 50, max: 200 }
-  }
-
-  const coverage = coverageMap[coverageArea]
-  const avgCoverage = (coverage.min + coverage.max) / 2
-
-  // Threat level multipliers
-  const threatMultipliers: Record<ThreatLevel, number> = {
-    "intrusion-detection": 1.0,
-    "surveillance-monitoring": 1.2,
-    "rapid-response": 1.1,
-    "perimeter-security": 1.3,
-    "multi-threat": 1.5
-  }
-
-  const multiplier = threatMultipliers[threatLevel] || 1.0
 
   const products: { product: string; quantity: number; capability: string }[] = []
 
@@ -41,60 +38,58 @@ function calculateQuantities(
     capability: PRODUCT_SPECS.ArtemisOS.capabilities[0]
   })
 
-  // Calculate quantities for each recommended product
+  // Calculate quantities for each recommended product using product-specific calculators
   for (const rec of facility.recommendedProducts) {
     if (rec.product === "ArtemisOS") continue
 
     const spec = PRODUCT_SPECS[rec.product as keyof typeof PRODUCT_SPECS]
     if (!spec) continue
 
-    // Base quantity calculation
-    let quantity = rec.minQuantity
-
-    // Adjust based on coverage area
-    if (spec.operationalRange > 0) {
-      const neededForCoverage = Math.ceil(avgCoverage / spec.operationalRange)
-      quantity = Math.max(quantity, neededForCoverage)
-    }
-
-    // Adjust based on threat level
-    quantity = Math.ceil(quantity * multiplier)
-
-    // Cap at max quantity
-    quantity = Math.min(quantity, rec.maxQuantity)
-
-    // Special logic for specific products
-    if (rec.product === "Kallon" && spec.detectionRange > 0) {
-      // Kallon: 3km detection, 15km coverage radius
-      const towersNeeded = Math.ceil(avgCoverage / 15)
-      quantity = Math.max(quantity, towersNeeded)
-    }
-
-    if (rec.product === "Iroko" && threatLevel === "surveillance-monitoring") {
-      // Iroko for 24/7 surveillance needs more units for rotation
-      quantity = Math.ceil(quantity * 1.5)
-    }
-
-    if (rec.product === "Archer" && threatLevel === "rapid-response") {
-      // Archer for rapid response - ensure multiple units for redundancy
-      quantity = Math.max(quantity, 2)
-    }
-
-    if (rec.product === "Duma" && coverageArea === "50km-plus") {
-      // Duma for large areas - more ground units needed
-      quantity = Math.ceil(quantity * 1.3)
-    }
-
-    // Only include if quantity > 0 and priority matches threat
+    // Check if product should be included based on threat match
+    const threatProfile = analyzeThreat(threatLevel, facilityType)
     const isThreatMatch = facility.threatPriorities.includes(threatLevel) || 
                          rec.priority === "essential" ||
-                         (rec.priority === "recommended" && multiplier >= 1.2)
+                         (rec.priority === "recommended" && threatProfile.multiplier >= 1.2)
 
-    if (quantity > 0 && isThreatMatch) {
+    if (!isThreatMatch) continue
+
+    // Use product-specific calculator
+    let productCalc
+    const baseQuantity = rec.minQuantity
+
+    switch (rec.product) {
+      case "Kallon":
+        productCalc = calculateKallonQuantity(coverageArea, threatLevel, baseQuantity)
+        break
+      case "Iroko":
+        productCalc = calculateIrokoQuantity(coverageArea, threatLevel, baseQuantity)
+        break
+      case "Archer":
+        productCalc = calculateArcherQuantity(coverageArea, threatLevel, baseQuantity)
+        break
+      case "Duma":
+        productCalc = calculateDumaQuantity(coverageArea, threatLevel, baseQuantity)
+        break
+      default:
+        productCalc = calculateGenericProductQuantity(
+          rec.product,
+          coverageArea,
+          threatLevel,
+          baseQuantity
+        )
+    }
+
+    // Apply max quantity constraint
+    if (rec.maxQuantity > 0) {
+      productCalc.quantity = Math.min(productCalc.quantity, rec.maxQuantity)
+    }
+
+    // Only include if quantity > 0
+    if (productCalc.quantity > 0) {
       products.push({
-        product: rec.product,
-        quantity,
-        capability: spec.capabilities[0] || `${spec.name} deployment`
+        product: productCalc.product,
+        quantity: productCalc.quantity,
+        capability: productCalc.capability
       })
     }
   }
@@ -102,7 +97,9 @@ function calculateQuantities(
   return products
 }
 
-// Generate description based on configuration
+/**
+ * Generate description based on configuration
+ */
 function generateDescription(
   facilityType: FacilityType,
   threatLevel: ThreatLevel,
@@ -137,7 +134,9 @@ function generateDescription(
   return `${threat} for ${facility} with ${productCount} product types and ${totalUnits} total units, powered by ArtemisOS AI intelligence platform`
 }
 
-// Generate response times based on products
+/**
+ * Generate response times based on products
+ */
 function generateResponseTimes(
   products: { product: string; quantity: number }[]
 ): { product: string; time: string }[] {
@@ -157,12 +156,15 @@ function generateResponseTimes(
   return responseTimes
 }
 
+/**
+ * Generate product recommendation with validation, scoring, and explainability
+ */
 export function generateRecommendation(
   facilityType: FacilityType,
   threatLevel: ThreatLevel,
   coverageArea: CoverageArea
 ): ProductRecommendation {
-  // Calculate product quantities
+  // Calculate product quantities using modular components
   const products = calculateQuantities(facilityType, threatLevel, coverageArea)
 
   // Generate description
@@ -171,7 +173,8 @@ export function generateRecommendation(
   // Generate response times
   const responseTimes = generateResponseTimes(products)
 
-  return {
+  // Create base recommendation
+  const recommendation: ProductRecommendation = {
     products: products.map(p => ({
       name: p.product,
       quantity: p.quantity,
@@ -180,4 +183,24 @@ export function generateRecommendation(
     description,
     responseTimes
   }
+
+  // Validate recommendation
+  const validation = validateRecommendation(recommendation, facilityType, threatLevel, coverageArea)
+  if (!validation.isValid) {
+    console.warn("Recommendation validation issues:", validation.errors)
+  }
+  if (validation.warnings.length > 0) {
+    console.warn("Recommendation validation warnings:", validation.warnings)
+  }
+  recommendation.validation = validation
+
+  // Score recommendation
+  const score = scoreRecommendation(recommendation, facilityType, threatLevel, coverageArea)
+  recommendation.score = score
+
+  // Generate explanation
+  const explanation = explainRecommendation(recommendation, facilityType, threatLevel, coverageArea)
+  recommendation.explanation = explanation
+
+  return recommendation
 }

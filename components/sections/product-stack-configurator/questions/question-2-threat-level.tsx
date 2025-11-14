@@ -153,28 +153,6 @@ export function Question2ThreatLevel({ facilityType, selected, onSelect, onBack,
                       {content.productResponse}
                     </div>
                   </div>
-
-                  {/* Threat intensity indicators - fluid bars */}
-                  <div className="flex gap-1.5 pt-3">
-                    {[1, 2, 3, 4, 5].map((level) => (
-                      <motion.div
-                        key={level}
-                        className={`h-1.5 flex-1 ${
-                          level <= content.intensity
-                            ? `bg-gradient-to-r ${content.gradient}`
-                            : 'bg-white/10'
-                        }`}
-                        style={{
-                          clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
-                        }}
-                        animate={isSelected && level <= content.intensity && !isReducedMotion ? {
-                          scaleY: [1, 1.3, 1],
-                          opacity: [0.7, 1, 0.7]
-                        } : {}}
-                        transition={{ duration: 1, delay: level * 0.1, repeat: Infinity }}
-                      />
-                    ))}
-                  </div>
                 </div>
 
                 {/* Selection indicator */}

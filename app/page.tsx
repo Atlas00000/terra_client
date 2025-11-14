@@ -14,10 +14,12 @@ import { useState, useEffect } from "react"
 // ═══════════════════════════════════════════════════════════════════════════
 
 // Import critical above-the-fold sections
-// import { HeroSection } from "@/components/sections/hero-section"
+import { ProductHeroSection } from "@/components/sections/product-hero"
 // import { WhoWeAreSection } from "@/components/sections/who-we-are-section"
 import { ProductStackConfigurator } from "@/components/sections/product-stack-configurator"
-import { IntegrationReadinessAssessment } from "@/components/sections/integration-readiness-assessment/index"
+import { ProductEcosystemSection } from "@/components/sections/product-ecosystem"
+// IntegrationReadinessAssessment component kept for future use
+// import { IntegrationReadinessAssessment } from "@/components/sections/integration-readiness-assessment/index"
 
 // Lazy load below-the-fold sections for better performance
 // const LeadershipSection = dynamic(
@@ -79,9 +81,15 @@ export default function Home() {
             - InternationalSection
             ═══════════════════════════════════════════════════════════════════════════ */}
 
+        {/* Section 1: Product Hero */}
+        <ProductHeroSection />
+
         {/* Section 2: Interactive Qualification Tools */}
         <ProductStackConfigurator />
-        <IntegrationReadinessAssessment />
+        
+        {/* Section 5: Product Ecosystem (Technical Depth) */}
+        {/* IntegrationReadinessAssessment - Removed for now, component available for reuse */}
+        <ProductEcosystemSection />
 
         {/* Footer */}
         <Footer />
