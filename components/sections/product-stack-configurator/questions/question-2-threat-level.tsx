@@ -48,7 +48,7 @@ export function Question2ThreatLevel({ facilityType, selected, onSelect, onBack,
         transition={{ delay: 0.2, ...animationSettings }}
       >
         <span className="block">What's your primary</span>
-        <span className="block bg-gradient-to-r from-primary via-cyan-400 to-blue-500 bg-clip-text text-transparent">
+        <span className="block bg-gradient-to-r from-primary via-muted-foreground to-primary bg-clip-text text-transparent">
           threat concern?
         </span>
       </motion.h3>
@@ -118,9 +118,6 @@ export function Question2ThreatLevel({ facilityType, selected, onSelect, onBack,
                   transition={{ duration: 3, repeat: Infinity, ease: 'linear' }}
                 />
 
-                {/* Icon */}
-                <div className="text-5xl mb-4">{content.icon}</div>
-
                 {/* Content */}
                 <div className="relative z-10 space-y-4 flex-1">
                   <motion.div
@@ -137,13 +134,13 @@ export function Question2ThreatLevel({ facilityType, selected, onSelect, onBack,
                     {content.description}
                   </div>
 
-                  {/* Real scenario from product specs */}
+                  {/* Scenario from product specs */}
                   <div className="pt-3 border-t border-white/10">
-                    <div className="text-xs font-semibold text-primary/80 uppercase tracking-wider mb-1">
-                      Real Scenario
+                    <div className="text-xs font-semibold text-primary/80 uppercase tracking-wider mb-2">
+                      Scenario
                     </div>
                     <div className="text-xs text-muted-foreground/70 leading-relaxed">
-                      {content.realScenario}
+                      {content.scenario}
                     </div>
                   </div>
 

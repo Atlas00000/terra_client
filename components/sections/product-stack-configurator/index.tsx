@@ -78,7 +78,7 @@ export function ProductStackConfigurator() {
       <div className="absolute inset-0">
         {/* Animated gradient overlay */}
         <motion.div
-          className="absolute inset-0 bg-gradient-to-br from-primary/20 via-cyan-500/10 to-blue-500/20"
+          className="absolute inset-0 bg-gradient-to-br from-primary/10 via-muted/5 to-primary/10"
           animate={!isReducedMotion ? {
             backgroundPosition: ['0% 0%', '100% 100%']
           } : {}}
@@ -226,7 +226,7 @@ export function ProductStackConfigurator() {
             viewport={{ once: true }}
           >
             <motion.div
-              className="w-2.5 h-2.5 bg-gradient-to-br from-primary to-cyan-400 rounded-full"
+              className="w-2.5 h-2.5 bg-primary rounded-full"
               animate={!isReducedMotion ? { scale: [1, 1.3, 1], opacity: [1, 0.6, 1] } : {}}
               transition={{ duration: 2, repeat: Infinity }}
             />
@@ -241,7 +241,7 @@ export function ProductStackConfigurator() {
             viewport={{ once: true }}
           >
             <span className="block text-foreground">Build Your</span>
-            <span className="block bg-gradient-to-r from-primary via-cyan-400 to-blue-500 bg-clip-text text-transparent">
+                  <span className="block bg-gradient-to-r from-primary via-muted-foreground to-primary bg-clip-text text-transparent">
               Defense Stack
             </span>
           </motion.h2>
@@ -257,52 +257,72 @@ export function ProductStackConfigurator() {
           </motion.p>
         </motion.div>
 
-        {/* Progress Indicator - Fluid Design */}
+        {/* Progress Indicator - Subtle Slider Bar */}
         <motion.div
-          className="flex justify-center mb-12"
+          className="flex justify-center mb-8"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
         >
-          <div className="flex items-center gap-3 md:gap-6">
-            {[1, 2, 3].map((num) => (
-              <div key={num} className="flex items-center gap-2 md:gap-4">
+          <div className="w-full max-w-md relative">
+            {/* Background track */}
+            <div className="h-1 bg-white/5 backdrop-blur-sm"
+              style={{
+                clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
+              }}
+            />
+            
+            {/* Progress fill */}
+            <motion.div
+                    className="absolute top-0 left-0 h-1 bg-gradient-to-r from-primary via-primary/80 to-primary"
+              style={{
+                clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
+              }}
+              initial={{ width: '0%' }}
+              animate={{ 
+                width: state.currentQuestion === 1 
+                  ? '0%' 
+                  : state.currentQuestion === 2 
+                  ? '50%' 
+                  : '100%'
+              }}
+              transition={{ duration: 0.5, ease: 'easeOut' }}
+            />
+
+            {/* Question markers - subtle dots */}
+            {[1, 2, 3].map((num) => {
+              const position = ((num - 1) / 2) * 100
+              const isActive = state.currentQuestion >= num
+              const isCurrent = state.currentQuestion === num
+              
+              return (
                 <motion.div
-                  className={`w-12 h-12 md:w-14 md:h-14 flex items-center justify-center font-black text-base md:text-lg backdrop-blur-xl border-0 transition-all ${
-                    state.currentQuestion >= num
-                      ? 'bg-gradient-to-br from-primary to-cyan-400 text-white shadow-lg shadow-primary/50'
-                      : 'bg-white/5 text-muted-foreground/50'
-                  }`}
-                  style={{
-                    clipPath: state.currentQuestion >= num
-                      ? 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
-                      : 'polygon(10% 0%, 90% 0%, 100% 10%, 100% 90%, 90% 100%, 10% 100%, 0% 90%, 0% 10%)'
-                  }}
-                  animate={state.currentQuestion === num && !isReducedMotion ? {
-                    scale: [1, 1.15, 1],
-                    rotate: [0, 5, -5, 0]
-                  } : {}}
-                  transition={{ duration: 1, repeat: Infinity }}
+                  key={num}
+                  className="absolute top-1/2 -translate-y-1/2 -translate-x-1/2"
+                  style={{ left: `${position}%` }}
+                  initial={{ opacity: 0, scale: 0 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ delay: 0.5 + num * 0.1 }}
                 >
-                  {num}
-                </motion.div>
-                {num < 3 && (
                   <motion.div
-                    className={`h-1 w-12 md:w-20 ${
-                      state.currentQuestion > num 
-                        ? 'bg-gradient-to-r from-primary to-cyan-400' 
-                        : 'bg-white/10'
+                    className={`w-2 h-2 rounded-full ${
+                      isActive
+                        ? 'bg-primary'
+                        : 'bg-white/20'
                     }`}
-                    style={{
-                      clipPath: 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
-                    }}
-                    initial={{ scaleX: 0 }}
-                    animate={{ scaleX: state.currentQuestion > num ? 1 : 0 }}
-                    transition={{ duration: 0.5, ease: 'easeOut' }}
+                    animate={isCurrent && !isReducedMotion ? {
+                      scale: [1, 1.5, 1],
+                      boxShadow: [
+                        '0 0 0 0 rgba(74, 144, 226, 0)',
+                        '0 0 0 4px rgba(74, 144, 226, 0.3)',
+                        '0 0 0 0 rgba(74, 144, 226, 0)'
+                      ]
+                    } : {}}
+                    transition={{ duration: 2, repeat: Infinity }}
                   />
-                )}
-              </div>
-            ))}
+                </motion.div>
+              )
+            })}
           </div>
         </motion.div>
 

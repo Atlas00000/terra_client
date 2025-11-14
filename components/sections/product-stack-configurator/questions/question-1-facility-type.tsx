@@ -27,7 +27,7 @@ export function Question1FacilityType({ selected, onSelect, animationSettings, i
         transition={{ delay: 0.1, ...animationSettings }}
       >
         <span className="block">What infrastructure</span>
-        <span className="block bg-gradient-to-r from-primary via-cyan-400 to-blue-500 bg-clip-text text-transparent">
+        <span className="block bg-gradient-to-r from-primary via-muted-foreground to-primary bg-clip-text text-transparent">
           are you protecting?
         </span>
       </motion.h3>
@@ -164,7 +164,7 @@ export function Question1FacilityType({ selected, onSelect, animationSettings, i
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                   >
                     <motion.div
-                      className="w-full h-full bg-gradient-to-br from-primary to-cyan-400 rounded-full flex items-center justify-center shadow-lg shadow-primary/50"
+                      className="w-full h-full bg-primary rounded-full flex items-center justify-center shadow-lg shadow-primary/50"
                       animate={!isReducedMotion ? {
                         scale: [1, 1.1, 1],
                         rotate: [0, 5, -5, 0]
