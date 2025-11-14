@@ -16,6 +16,8 @@ import { useState, useEffect } from "react"
 // Import critical above-the-fold sections
 // import { HeroSection } from "@/components/sections/hero-section"
 // import { WhoWeAreSection } from "@/components/sections/who-we-are-section"
+import { ProductStackConfigurator } from "@/components/sections/product-stack-configurator"
+import { IntegrationReadinessAssessment } from "@/components/sections/integration-readiness-assessment/index"
 
 // Lazy load below-the-fold sections for better performance
 // const LeadershipSection = dynamic(
@@ -76,6 +78,10 @@ export default function Home() {
             - ProductEcosystemSection / MobileProductSlideshow
             - InternationalSection
             ═══════════════════════════════════════════════════════════════════════════ */}
+
+        {/* Section 2: Interactive Qualification Tools */}
+        <ProductStackConfigurator />
+        <IntegrationReadinessAssessment />
 
         {/* Footer */}
         <Footer />
